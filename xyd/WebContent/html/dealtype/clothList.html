@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript" src="../js/jquery.min.js"></script>
+<style type="text/css">
+.content {
+	width: 500px;
+	height: 200px;
+	border: 1px solid;
+}
+</style>
+<script type="text/javascript">
+	$(function(){
+		var $a = $(".content a");
+		console.log($a);
+		$("a").click(function(){
+			//alert(this);
+			console.log($(this).text());
+			alert($(this).text());
+		})
+	})
+</script>
+</head>
+<body>
+	<div class="content">
+		<p>
+			<label>棉服</label> <a href="#">风衣</a> <a href="#">风衣</a> <a href="#">风衣</a> <a
+				href="#">风衣</a> <a href="#">风衣</a> <a href="#">风衣</a> <a href="#">风衣</a>
+			<a href="#">风衣</a> <a href="#">风衣</a> <a href="#">风衣</a>
+		</p>
+		<p>
+			<label>棉服</label> <a href="#">风衣</a> <a href="#">风衣</a> <a href="#">风衣</a> <a
+				href="#">风衣</a> <a href="#">风衣</a> <a href="#">风衣</a> <a href="#">风衣</a>
+			<a href="#">风衣</a> <a href="#">风衣</a> <a href="#">风衣</a>
+		</p>
+	</div>
+</body>
+</html>

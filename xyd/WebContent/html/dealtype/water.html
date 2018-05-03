@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript" src="../../js/jquery.min.js"></script>
+<link rel="stylesheet" type="text/css" href="../../css/easyui.css">
+<link rel="stylesheet" type="text/css" href="../../css/icon.css">
+<link rel="stylesheet" type="text/css" href="../../css/demo.css">
+<script type="text/javascript" src="../../js/jquery.easyui.min.js"></script>
+<style type="text/css">
+.content {
+	width: 500px;
+	height: 200px;
+	border: 1px solid;
+}
+</style>
+<script type="text/javascript">
+	$(function() {
+
+		$.get("http://localhost:8003/xyd/water/cloth", function(result) {
+			alert(result);
+		}, "json");
+
+		var $a = $(".content a");
+		var $goods = $(".goods");
+		$("a").click(function() {
+			console.log($(this).attr("value"));
+			//$goods.html("<p>你是我</p>");
+			/* 添加商品*/
+			append($(this).text(), $(this).attr("value"));
+		});
+
+		$("#submit").click(function() {
+			//var rows = $(".datagrid-btable .datagrid-row td");
+			var rows = $("#dg").datagrid("getRows");
+			console.log(rows);
+			$(rows).each(function() {
+				console.log(this);
+			});
+			$.ajax({
+				url : "http://localhost:8003/xyd/water/cloth",
+				data : rows,
+				dataType : 'json', //【这里要小心啊，不要用jsonp，一定是json】
+				type : 'post',
+				crossDomain : true, //【这个很重要，一定要加】
+				success : function(result) {
+					console.log(result);
+				},
+				error : function(result) {
+					console.log(result);
+				}
+			});
+		});
+	})
+</script>
+</head>
+<body>
+	<div class="content">
+		<p>
+			<label>棉服分类：</label> <a href="#" value="100.00">风衣</a> <a href="#">风衣</a>
+			<a href="#">风衣</a> <a href="#">风衣</a> <a href="#">风衣</a> <a href="#">风衣</a>
+			<a href="#">风衣</a> <a href="#">风衣</a> <a href="#">风衣</a> <a href="#">风衣</a>
+		</p>
+		<p>
+			<label>羽绒服分类：</label> <a href="#">风衣</a> <a href="#">风衣</a> <a
+				href="#">风衣</a> <a href="#">风衣</a> <a href="#">风衣</a> <a href="#">风衣</a>
+			<a href="#">风衣</a> <a href="#">风衣</a> <a href="#">风衣</a> <a href="#">风衣</a>
+		</p>
+	</div>
+	<div class="goods"></div>
+	<div class="good">
+		<table id="dg" class="easyui-datagrid" title="Row Editing in DataGrid"
+			style="width: 95%; height: auto"
+			data-options="
+                iconCls: 'icon-edit',
+                singleSelect: true,
+                onClickCell: onClickCell,
+                onEndEdit: onEndEdit">
+			<thead>
+				<tr>
+					<th data-options="field:'good',width:100">名称</th>
+					<th
+						data-options="field:'colorid',width:100,
+                        formatter:function(value,row){
+                            return row.colorname;
+                        },
+                        editor:{
+                            type:'combobox',
+                            options:{
+                                valueField:'colorid',
+                                textField:'colorname',
+                                method:'get',
+                                url:'colors.json'
+                            }
+                            <!-- required:true -->
+                        }">颜色</th>
+					<th
+						data-options="field:'listprice',width:80,align:'left',editor:{type:'numberbox',options:{precision:1}}">建议价格</th>
+					<th
+						data-options="field:'unitcost',width:80,align:'left',editor:'numberbox'">实际价格
+					</th>
+					<th data-options="field:'attr1',width:250,editor:'textbox'">备注</th>
+					<th
+						data-options="field:'status',width:60,align:'center',editor:{type:'checkbox',options:{on:'P',off:''}}">Status</th>
+				</tr>
+			</thead>
+		</table>
+	</div>
+	<button id="submit" class="easyui-linkbutton">确定</button>
+	<script type="text/javascript">
+		var editIndex = undefined;
+		function endEditing() {
+			if (editIndex == undefined) {
+				return true
+			}
+			if ($('#dg').datagrid('validateRow', editIndex)) {
+				$('#dg').datagrid('endEdit', editIndex);
+				editIndex = undefined;
+				return true;
+			} else {
+				return false;
+			}
+		}
+		function onClickCell(index, field) {
+			if (editIndex != index) {
+				if (endEditing()) {
+					$('#dg').datagrid('selectRow', index).datagrid('beginEdit',
+							index);
+					var ed = $('#dg').datagrid('getEditor', {
+						index : index,
+						field : field
+					});
+					if (ed) {
+						($(ed.target).data('textbox') ? $(ed.target).textbox(
+								'textbox') : $(ed.target)).focus();
+					}
+					editIndex = index;
+				} else {
+					setTimeout(function() {
+						$('#dg').datagrid('selectRow', editIndex);
+					}, 0);
+				}
+			}
+		}
+		function onEndEdit(index, row) {
+			var ed = $(this).datagrid('getEditor', {
+				index : index,
+				field : 'colorid'
+			});
+			row.colorname = $(ed.target).combobox('getText');
+		}
+		function append(name, price) {
+			if (endEditing()) {
+				$('#dg').datagrid('appendRow', {
+					good : name,
+					attr1 : 'num',
+					listprice : price,
+					status : 'P'
+				});
+				editIndex = $('#dg').datagrid('getRows').length - 1;
+				$('#dg').datagrid('selectRow', editIndex).datagrid('beginEdit',
+						editIndex);
+			}
+		}
+		function removeit() {
+			if (editIndex == undefined) {
+				return
+
+				
+
+								
+
+				
+
+			}
+			$('#dg').datagrid('cancelEdit', editIndex).datagrid('deleteRow',
+					editIndex);
+			editIndex = undefined;
+		}
+		function accept() {
+			if (endEditing()) {
+				$('#dg').datagrid('acceptChanges');
+			}
+		}
+		function reject() {
+			$('#dg').datagrid('rejectChanges');
+			editIndex = undefined;
+		}
+		function getChanges() {
+			var rows = $('#dg').datagrid('getChanges');
+			alert(rows.length + ' rows are changed!');
+		}
+	</script>
+</body>
+</html>

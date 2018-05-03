@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Basic Layout - jQuery EasyUI Demo</title>
+<link rel="stylesheet" type="text/css"
+	href="../css/easyui.css">
+<link rel="stylesheet" type="text/css" href="../css/icon.css">
+<link rel="stylesheet" type="text/css" href="../css/demo.css">
+<script type="text/javascript" src="../js/jquery.min.js"></script>
+<script type="text/javascript" src="../js/jquery.easyui.min.js"></script>
+<script type="text/javascript">
+	$(function(){
+		$("#main_iframe").attr("src","../login.html");
+		
+		$("p").click(function(){
+			var $id = $(this).attr("id");
+			$("#main_iframe").attr("src","dealtype/"+$id+".html");
+		})
+	});
+</script>
+</head>
+<body class="easyui-layout">
+	<div data-options="region:'north',border:false" style="height:60px;background:#B3DFDA;padding:10px">二姨的洗衣店</div>
+	<div data-options="region:'west',split:true,title:'West'" style="width:180px;">
+		<div class="easyui-accordion" style="width:100%;">
+			<div title="About" data-options="iconCls:'icon-ok'" style="overflow:auto;padding:10px;">
+				<h3 style="color:#0099FF;">Accordion for jQuery</h3>
+				<p>Accordion is a part of easyui framework for jQuery. It lets you define your accordion component on web page more easily.</p>
+			</div>
+			<div title="处理类型" data-options="iconCls:'icon-help'" style="padding:10px;">
+				<p id="water" style="cursor: pointer;">水洗</p>
+				<p style="cursor: pointer;">干洗</p>
+				<p style="cursor: pointer;">剪裁</p>
+				<p style="cursor: pointer;">熨烫</p>
+			</div>
+			<div title="会员管理" data-options="iconCls:'icon-help'" style="padding:10px;">
+				<p style="cursor: pointer;">新建会员</p>
+				<p style="cursor: pointer;">会员充值</p>
+				<p style="cursor: pointer;">会员信息</p>
+			</div>
+			<div title="洗护分类" data-options="iconCls:'icon-search'" style="padding:10px;">
+				<ul class="easyui-tree">
+					<li>
+						<span>衣服</span>
+						<ul>
+							<li>
+								<span>纯毛类</span>
+								<ul>
+									<li>羊毛衫</li>
+									<li>羊绒衫</li>
+									<li>驼毛衫</li>
+									<li>兔毛衫</li>
+									<li>貂</li>
+									<li>自定义</li>
+								</ul>
+							</li>
+							<li>
+								<span>混纺类</span>
+								<ul>
+									<li>毛类/腈纶</li>
+									<li>绒类/腈纶</li>
+									<li>绒类/蚕丝</li>
+									<li>绒类/棉</li>
+									<li>涤纶/棉</li>
+									<li>自定义</li>
+								</ul>
+							</li>
+							<li>
+								<span>快速分类</span>
+								<ul>
+									<li>T恤</li>
+									<li>衬衫</li>
+									<li>毛衣</li>
+									<li>针织衫</li>
+									<li>小背心/吊带</li>
+									<li>蕾丝衫</li>
+									<li>马甲</li>
+									<li>外套</li>
+									<li>卫衣</li>
+									<li>风衣</li>
+									<li>皮衣</li>
+									<li>棉服</li>
+									<li>羽绒服</li>
+								</ul>
+							</li>
+							<li>
+								<span>套装</span>
+								<ul>
+									<li>运动服</li>
+									<li>西服</li>
+								</ul>
+							</li>
+						</ul>
+					</li>
+					<li>
+						<span>裤子</span>
+						<ul>
+							<li>
+								<span>快速分类</span>
+								<ul>
+									<li>牛仔裤</li>
+									<li>短裤</li>
+									<li>长裙</li>
+									<li>短裙</li>
+								</ul>
+								
+							</li>
+						</ul>
+					</li>
+					<li>
+						<span>鞋</span>
+						<ul>
+							<li>
+								<span>快速分类</span>
+								<ul>
+									<li>旅游鞋</li>
+									<li>皮鞋</li>
+									<li>长靴</li>
+									<li>短靴</li>
+									<li>球鞋</li>
+									<li>板鞋</li>
+								</ul>
+							</li>
+						</ul>
+					</li>
+					<li>
+						<span>家庭日常</span>
+						<ul>
+							<li>四件套</li>
+							<li>窗帘</li>
+						</ul>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<!-- <div data-options="region:'east',split:true,collapsed:true,title:'East'" style="width:100px;padding:10px;">east region</div> -->
+	<div data-options="region:'south',border:false" style="height:20px;background:#A9FACD;padding:10px;"><label style="text-align: center">south region</label></div>
+	<div data-options="region:'center',title:'Center'">
+		<iframe id="main_iframe" style="width: 100%;height:400px;border:0px;">
+			这里是主页面！
+		</iframe>
+	</div>
+</body>
+</html>

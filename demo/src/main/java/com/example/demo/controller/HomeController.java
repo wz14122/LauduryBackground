@@ -17,7 +17,7 @@ public class HomeController {
 
 	@GetMapping(value = "/home")
 	public List<User> homePage() {
-		System.out.println("点紧缺");
+		System.out.println("点紧s缺");
 		return uService.homePage();
 	}
 }

@@ -35,22 +35,21 @@
 			//var rows = $(".datagrid-btable .datagrid-row td");
 			var rows = $("#dg").datagrid("getRows");
 			console.log(rows);
-			$(rows).each(function() {
-				console.log(this);
-			});
+			var datas = {"reqMap":"123456"};
 			$.ajax({
 				url : "http://localhost:8003/xyd/water/cloth",
-				data : rows,
+				data : datas,
 				dataType : 'json', //【这里要小心啊，不要用jsonp，一定是json】
 				type : 'post',
-				crossDomain : true, //【这个很重要，一定要加】
+				//crossDomain : true, //【这个很重要，一定要加】
 				success : function(result) {
-					console.log(result);
+					console.log("成功了" + result);
 				},
 				error : function(result) {
-					console.log(result);
+					console.log("失败了" + result);
 				}
 			});
+
 		});
 	})
 </script>
@@ -165,14 +164,7 @@
 		}
 		function removeit() {
 			if (editIndex == undefined) {
-				return
-
-				
-
-								
-
-				
-
+				return;
 			}
 			$('#dg').datagrid('cancelEdit', editIndex).datagrid('deleteRow',
 					editIndex);

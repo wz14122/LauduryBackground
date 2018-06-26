@@ -1,6 +1,5 @@
 package com.example.demo.controller;
 
-import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,21 +22,21 @@ public class WaterController {
 	private WaterService service;
 	
 	@PostMapping(value = "/cloth")
-	public Result<List<String>> cloth(@RequestParam String reqMap) {
+	public Result cloth(@RequestParam String reqMap) {
 		System.out.println(reqMap);
 		System.out.println("我进来了");
 		return ResultUtil.success(service.getList());
 	}
 	
 	@PostMapping(value = "/test")
-	public Result<List<String>> cloths(@RequestBody Map<String,Object> reqMap) {
+	public Result cloths(@RequestBody Map<String,Object> reqMap) {
 		System.out.println(reqMap);
 		System.out.println("我进来了");
 		return ResultUtil.success(service.getList());
 	}
 	
 	@GetMapping(value = "/cloth")
-	public Result<List<String>> getList() {
+	public Result getList() {
 		return ResultUtil.success(service.getList());
 	}
 }

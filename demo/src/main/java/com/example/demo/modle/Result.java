@@ -1,41 +1,57 @@
 package com.example.demo.modle;
 
-public class Result<T> implements Cloneable {
+public class Result implements Cloneable {
 
-	private String code;
+	private Integer code;
 	private String msg;
-	private T data;
+	private Object data;
 
-	public String getCode() {
+	/**
+	 * @return the code
+	 */
+	public Integer getCode() {
 		return code;
 	}
 
-	public void setCode(String code) {
+	/**
+	 * @param code
+	 *            the code to set
+	 */
+	public void setCode(Integer code) {
 		this.code = code;
 	}
 
+	/**
+	 * @return the msg
+	 */
 	public String getMsg() {
 		return msg;
 	}
 
+	/**
+	 * @param msg
+	 *            the msg to set
+	 */
 	public void setMsg(String msg) {
 		this.msg = msg;
 	}
 
-	public T getData() {
+	/**
+	 * @return the data
+	 */
+	public Object getData() {
 		return data;
 	}
 
-	public void setData(T data) {
+	/**
+	 * @param data
+	 *            the data to set
+	 */
+	public void setData(Object data) {
 		this.data = data;
 	}
 
-	@Override
-	public String toString() {
-		return "Result [code=" + code + ", msg=" + msg + ", data=" + data + "]";
-	}
-
-	public Result(String code, String msg, T data) {
+	public Result(Integer code, String msg, Object data) {
 		super();
 		this.code = code;
 		this.msg = msg;

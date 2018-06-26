@@ -14,9 +14,18 @@ public class UserDao {
 	@Autowired
 	private UserRespository uRespository;
 
-	public List<User> homePage() {
+	public List<User> findAll() {
 		// TODO Auto-generated method stub
 		return uRespository.findAll();
+	}
+
+	public User save(User user) {
+		User u = uRespository.save(user);
+		return u;
+	}
+	
+	public User findById(int id) {
+		return uRespository.findById(id).orElse(null);
 	}
 
 }

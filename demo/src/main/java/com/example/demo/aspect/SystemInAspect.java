@@ -6,6 +6,10 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.stereotype.Component;
 
+/**
+ * @author wz
+ * 这里进行权限管理
+ */
 @Aspect
 @Component
 public class SystemInAspect {

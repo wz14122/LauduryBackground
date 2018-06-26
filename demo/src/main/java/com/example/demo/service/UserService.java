@@ -14,8 +14,17 @@ public class UserService {
 	@Autowired
 	private UserDao uDao;
 
-	public List<User> homePage() {
+	public List<User> findAll() {
 
-		return uDao.homePage();
+		return uDao.findAll();
+	}
+	
+	public User save(User user){
+		User u = uDao.save(user);
+		return u;
+	}
+	
+	public User findById(int id) {
+		return uDao.findById(id);
 	}
 }

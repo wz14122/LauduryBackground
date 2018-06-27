@@ -10,6 +10,8 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.annotations.GenericGenerator;
+
 /**
  * @author wz-pc 个人消费详情表，为以后打折情况做准备
  */
@@ -17,7 +19,8 @@ import javax.validation.constraints.NotNull;
 public class PersonAmount {
 
 	@Id
-	@GeneratedValue
+	@GenericGenerator(name = "idGenerator", strategy = "uuid")
+	@GeneratedValue(generator = "idGenerator")
 	private int personAmount_id;
 	@NotNull
 	private int customer_id;
@@ -29,7 +32,7 @@ public class PersonAmount {
 	private String remark; // 打折信息等备注
 	@NotNull
 	@Temporal(TemporalType.DATE)
-	private Date consumption_date; // 二次录入时间，即消费时间
+	private Date consumptionDate; // 二次录入时间，即消费时间
 
 	public int getPersonAmount_id() {
 		return personAmount_id;
@@ -71,22 +74,22 @@ public class PersonAmount {
 		this.remark = remark;
 	}
 
-	public Date getConsumption_date() {
-		return consumption_date;
+	public Date getConsumptionDate() {
+		return consumptionDate;
 	}
 
-	public void setConsumption_date(Date consumption_date) {
-		this.consumption_date = consumption_date;
+	public void setConsumptionDate(Date consumptionDate) {
+		this.consumptionDate = consumptionDate;
 	}
 
 	public PersonAmount(@NotNull int customer_id, @NotNull double total, @NotNull int times, String remark,
-			@NotNull Date consumption_date) {
+			@NotNull Date consumptionDate) {
 		super();
 		this.customer_id = customer_id;
 		this.total = total;
 		this.times = times;
 		this.remark = remark;
-		this.consumption_date = consumption_date;
+		this.consumptionDate = consumptionDate;
 	}
 
 	public PersonAmount() {
@@ -96,7 +99,7 @@ public class PersonAmount {
 	@Override
 	public String toString() {
 		return "PersonAmount [personAmount_id=" + personAmount_id + ", customer_id=" + customer_id + ", total=" + total
-				+ ", times=" + times + ", remark=" + remark + ", consumption_date=" + consumption_date + "]";
+				+ ", times=" + times + ", remark=" + remark + ", consumptionDate=" + consumptionDate + "]";
 	}
 
 }

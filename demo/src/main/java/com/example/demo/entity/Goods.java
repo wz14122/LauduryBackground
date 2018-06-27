@@ -12,6 +12,8 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.annotations.GenericGenerator;
+
 /**
  * @author wz-pc 货物清单表，即一种需要清洗的货物,与Consumption表应该是多对一的关系，量大，注意优化
  */
@@ -20,7 +22,8 @@ import javax.validation.constraints.NotNull;
 public class Goods {
 
 	@Id
-	@GeneratedValue
+	@GenericGenerator(name = "idGenerator", strategy = "uuid")
+	@GeneratedValue(generator = "idGenerator")
 	private int goods_id;
 	@NotNull
 	private int cloth_id; // 清洗货物类型
@@ -30,10 +33,10 @@ public class Goods {
 	@Column(name = "customer_id")
 	private int customer_id; // 消费者ID
 	@NotNull
-	private boolean fetch_is; // 是否已经取走，可能存在多种货物，不会同时取走的情况
+	private boolean haveFetch; // 是否已经取走，可能存在多种货物，不会同时取走的情况
 	@NotNull
 	@Temporal(TemporalType.DATE)
-	private Date fetch_date;
+	private Date fetchDate;
 	private double price; // 实际价格
 	@Column(length = 100)
 	private String remark;
@@ -62,14 +65,6 @@ public class Goods {
 		this.consumption_id = consumption_id;
 	}
 
-	public Date getFetch_date() {
-		return fetch_date;
-	}
-
-	public void setFetch_date(Date fetch_date) {
-		this.fetch_date = fetch_date;
-	}
-
 	public String getRemark() {
 		return remark;
 	}
@@ -86,12 +81,20 @@ public class Goods {
 		this.customer_id = customer_id;
 	}
 
-	public boolean isFetch_is() {
-		return fetch_is;
+	public boolean isHaveFetch() {
+		return haveFetch;
 	}
 
-	public void setFetch_is(boolean fetch_is) {
-		this.fetch_is = fetch_is;
+	public void setHaveFetch(boolean haveFetch) {
+		this.haveFetch = haveFetch;
+	}
+
+	public Date getFetchDate() {
+		return fetchDate;
+	}
+
+	public void setFetchDate(Date fetchDate) {
+		this.fetchDate = fetchDate;
 	}
 
 	public double getPrice() {
@@ -107,14 +110,14 @@ public class Goods {
 	}
 
 	public Goods(int goods_id, @NotNull int cloth_id, @NotNull int consumption_id, @NotNull int customer_id,
-			@NotNull boolean fetch_is, @NotNull Date fetch_date, double price, String remark) {
+			@NotNull boolean haveFetch, @NotNull Date fetchDate, double price, String remark) {
 		super();
 		this.goods_id = goods_id;
 		this.cloth_id = cloth_id;
 		this.consumption_id = consumption_id;
 		this.customer_id = customer_id;
-		this.fetch_is = fetch_is;
-		this.fetch_date = fetch_date;
+		this.haveFetch = haveFetch;
+		this.fetchDate = fetchDate;
 		this.price = price;
 		this.remark = remark;
 	}
@@ -122,7 +125,7 @@ public class Goods {
 	@Override
 	public String toString() {
 		return "Goods [goods_id=" + goods_id + ", cloth_id=" + cloth_id + ", consumption_id=" + consumption_id
-				+ ", customer_id=" + customer_id + ", fetch_is=" + fetch_is + ", fetch_date=" + fetch_date + ", remark="
+				+ ", customer_id=" + customer_id + ", haveFetch=" + haveFetch + ", fetchDate=" + fetchDate + ", remark="
 				+ remark + "]";
 	}
 

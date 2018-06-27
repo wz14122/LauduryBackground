@@ -9,7 +9,7 @@ import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(uniqueConstraints = { @UniqueConstraint(columnNames = { "wechat_id" }) })
+@Table(uniqueConstraints = { @UniqueConstraint(columnNames = { "wechatId" }) })
 public class Customer {
 
 	@Id
@@ -17,10 +17,10 @@ public class Customer {
 	private int customer_id;
 	@NotNull
 	@Column(length = 20)
-	private String customer_name;
+	private String customerName;
 	@NotNull
-	private byte customer_gender; // 保存用户性别，为以后数据分析做准备。
-	private String wechat_id;
+	private byte customerGender; // 保存用户性别，为以后数据分析做准备。
+	private String wechatId;
 	private String address; // 用户住址可为空
 	private String remark; // 用户其他信息
 
@@ -32,28 +32,28 @@ public class Customer {
 		this.customer_id = customer_id;
 	}
 
-	public String getCustomer_name() {
-		return customer_name;
+	public String getCustomerName() {
+		return customerName;
 	}
 
-	public void setCustomer_name(String customer_name) {
-		this.customer_name = customer_name;
+	public void setCustomerName(String customerName) {
+		this.customerName = customerName;
 	}
 
-	public byte getCustomer_gender() {
-		return customer_gender;
+	public byte getCustomerGender() {
+		return customerGender;
 	}
 
-	public void setCustomer_gender(byte customer_gender) {
-		this.customer_gender = customer_gender;
+	public void setCustomerGender(byte customerGender) {
+		this.customerGender = customerGender;
 	}
 
-	public String getWechat_id() {
-		return wechat_id;
+	public String getWechatId() {
+		return wechatId;
 	}
 
-	public void setWechat_id(String wechat_id) {
-		this.wechat_id = wechat_id;
+	public void setWechatId(String wechatId) {
+		this.wechatId = wechatId;
 	}
 
 	public String getAddress() {
@@ -72,18 +72,18 @@ public class Customer {
 		this.remark = remark;
 	}
 
-	public Customer(@NotNull String customer_name, @NotNull byte customer_gender, String wechat_id, String address,
+	public Customer(@NotNull String customerName, @NotNull byte customerGender, String wechatId, String address,
 			String remark) {
 		super();
-		this.customer_name = customer_name;
-		this.customer_gender = customer_gender;
-		this.wechat_id = wechat_id;
+		this.customerName = customerName;
+		this.customerGender = customerGender;
+		this.wechatId = wechatId;
 		this.address = address;
 		this.remark = remark;
 	}
 
-	public Customer(@NotNull String customer_name, @NotNull byte customer_gender) {
-		this(customer_name, customer_gender, "微信未添加", "地址未添加", "无备注");
+	public Customer(@NotNull String customerName, @NotNull byte customerGender) {
+		this(customerName, customerGender, "微信未添加", "地址未添加", "无备注");
 	}
 
 	public Customer() {
@@ -92,8 +92,8 @@ public class Customer {
 
 	@Override
 	public String toString() {
-		return "Customer [customer_id=" + customer_id + ", customer_name=" + customer_name + ", customer_gender="
-				+ customer_gender + ", wechat_id=" + wechat_id + ", address=" + address + ", remark=" + remark + "]";
+		return "Customer [customer_id=" + customer_id + ", customerName=" + customerName + ", customerGender="
+				+ customerGender + ", wechatId=" + wechatId + ", address=" + address + ", remark=" + remark + "]";
 	}
 
 }

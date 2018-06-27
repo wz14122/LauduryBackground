@@ -10,6 +10,8 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.annotations.GenericGenerator;
+
 /**
  * @author wz-pc 用户消费表，相当于二级目录，一次消费、消费清单，其中应该包括消费明细，即多种商品
  *         以后进行各类搜索操作的主要表，要仔细设计。注意加好索引，做好优化，以后可能会有大量数据.
@@ -18,14 +20,15 @@ import javax.validation.constraints.NotNull;
 public class Consumption {
 
 	@Id
-	@GeneratedValue
+	@GenericGenerator(name = "idGenerator", strategy = "uuid")
+	@GeneratedValue(generator = "idGenerator")
 	private int consumption_id;
 	@NotNull
 	@Temporal(TemporalType.DATE)
-	private Date consumption_date; 	// 消费时间
+	private Date consumptionDate; 	// 消费时间
 	@NotNull
 	@Temporal(TemporalType.DATE)
-	private Date suggest_date;		// 建議取貨時間
+	private Date suggestDate;		// 建議取貨時間
 	@NotNull
 	private int user_id; 			// 处置人
 	@NotNull
@@ -41,14 +44,6 @@ public class Consumption {
 
 	public void setConsumption_id(int consumption_id) {
 		this.consumption_id = consumption_id;
-	}
-
-	public Date getConsumption_date() {
-		return consumption_date;
-	}
-
-	public void setConsumption_date(Date consumption_date) {
-		this.consumption_date = consumption_date;
 	}
 
 	public int getUser_id() {
@@ -83,24 +78,31 @@ public class Consumption {
 		this.remark = remark;
 	}
 
-
-	public Date getSuggest_date() {
-		return suggest_date;
+	public Date getConsumptionDate() {
+		return consumptionDate;
 	}
 
-	public void setSuggest_date(Date suggest_date) {
-		this.suggest_date = suggest_date;
+	public void setConsumptionDate(Date consumptionDate) {
+		this.consumptionDate = consumptionDate;
+	}
+
+	public Date getSuggestDate() {
+		return suggestDate;
+	}
+
+	public void setSuggestDate(Date suggestDate) {
+		this.suggestDate = suggestDate;
 	}
 
 	public Consumption() {
 		super();
 	}
 
-	public Consumption(@NotNull Date consumption_date, @NotNull Date suggest_date, @NotNull int user_id,
+	public Consumption(@NotNull Date consumptionDate, @NotNull Date suggestDate, @NotNull int user_id,
 			@NotNull int customer_id, @NotNull int cloth_id, String remark) {
 		super();
-		this.consumption_date = consumption_date;
-		this.suggest_date = suggest_date;
+		this.consumptionDate = consumptionDate;
+		this.suggestDate = suggestDate;
 		this.user_id = user_id;
 		this.customer_id = customer_id;
 		this.cloth_id = cloth_id;
@@ -109,8 +111,8 @@ public class Consumption {
 
 	@Override
 	public String toString() {
-		return "Consumption [consumption_id=" + consumption_id + ", consumption_date=" + consumption_date
-				+ ", suggest_date=" + suggest_date + ", user_id=" + user_id + ", customer_id=" + customer_id
+		return "Consumption [consumption_id=" + consumption_id + ", consumptionDate=" + consumptionDate
+				+ ", suggestDate=" + suggestDate + ", user_id=" + user_id + ", customer_id=" + customer_id
 				+ ", cloth_id=" + cloth_id + ", remark=" + remark + "]";
 	}
 

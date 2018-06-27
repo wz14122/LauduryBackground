@@ -17,7 +17,7 @@ public class Cloth {
 	@NotNull
 	private int clothType_id; // 不为空，实在没有种类就是其他
 	@NotNull
-	private String cloth_name;
+	private String clothName;
 	@NotNull
 	private double price; // 某种衣服的清洗价格
 	private String remark; // 有些特殊情况需要照顾的
@@ -38,12 +38,12 @@ public class Cloth {
 		this.clothType_id = clothType_id;
 	}
 
-	public String getCloth_name() {
-		return cloth_name;
+	public String getClothName() {
+		return clothName;
 	}
 
-	public void setCloth_name(String cloth_name) {
-		this.cloth_name = cloth_name;
+	public void setClothName(String clothName) {
+		this.clothName = clothName;
 	}
 
 	public double getPrice() {
@@ -62,10 +62,10 @@ public class Cloth {
 		this.remark = remark;
 	}
 
-	public Cloth(@NotNull int clothType_id, @NotNull String cloth_name, @NotNull double price, String remark) {
+	public Cloth(@NotNull int clothType_id, @NotNull String clothName, @NotNull double price, String remark) {
 		super();
 		this.clothType_id = clothType_id;
-		this.cloth_name = cloth_name;
+		this.clothName = clothName;
 		this.price = price;
 		this.remark = remark;
 	}
@@ -76,7 +76,7 @@ public class Cloth {
 
 	@Override
 	public String toString() {
-		return "Cloth [cloth_id=" + cloth_id + ", clothType_id=" + clothType_id + ", cloth_name=" + cloth_name
+		return "Cloth [cloth_id=" + cloth_id + ", clothType_id=" + clothType_id + ", clothName=" + clothName
 				+ ", price=" + price + ", remark=" + remark + "]";
 	}
 

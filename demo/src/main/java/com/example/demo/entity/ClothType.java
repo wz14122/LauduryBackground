@@ -16,34 +16,34 @@ public class ClothType {
 	@GeneratedValue
 	private int clothType_id;
 	@NotNull
-	private String clothType_name;
+	private String clothTypeName;
 	@NotNull
-	private int clothType_code;
+	private int clothTypeCode;
 	@NotNull
 	private int state;
 
-	public int getCloth_id() {
+	public int getClothType_id() {
 		return clothType_id;
 	}
 
-	public void setCloth_id(int cloth_id) {
-		this.clothType_id = cloth_id;
+	public void setClothType_id(int clothType_id) {
+		this.clothType_id = clothType_id;
 	}
 
-	public String getClothType_name() {
-		return clothType_name;
+	public String getClothTypeName() {
+		return clothTypeName;
 	}
 
-	public void setClothType_name(String clothType_name) {
-		this.clothType_name = clothType_name;
+	public void setClothTypeName(String clothTypeName) {
+		this.clothTypeName = clothTypeName;
 	}
 
-	public int getClothType_code() {
-		return clothType_code;
+	public int getClothTypeCode() {
+		return clothTypeCode;
 	}
 
-	public void setClothType_code(int clothType_code) {
-		this.clothType_code = clothType_code;
+	public void setClothTypeCode(int clothTypeCode) {
+		this.clothTypeCode = clothTypeCode;
 	}
 
 	public int getState() {
@@ -63,21 +63,21 @@ public class ClothType {
 	 * @param clothType_code 类型码
 	 * @return 默认类型对象状态为1
 	 */
-	public ClothType(@NotNull String clothType_name, @NotNull int clothType_code) {
-		this(clothType_name, clothType_code, 1);
+	public ClothType(@NotNull String clothTypeName, @NotNull int clothTypeCode) {
+		this(clothTypeName, clothTypeCode, 1);
 	}
 
-	public ClothType(@NotNull String clothType_name, @NotNull int clothType_code, @NotNull int state) {
+	public ClothType(@NotNull String clothTypeName, @NotNull int clothTypeCode, @NotNull int state) {
 		super();
-		this.clothType_name = clothType_name;
-		this.clothType_code = clothType_code;
+		this.clothTypeName = clothTypeName;
+		this.clothTypeCode = clothTypeCode;
 		this.state = state;
 	}
 
 	@Override
 	public String toString() {
-		return "ClothType [cloth_id=" + clothType_id + ", clothType_name=" + clothType_name + ", clothType_code="
-				+ clothType_code + ", state=" + state + "]";
+		return "ClothType [cloth_id=" + clothType_id + ", clothTypeName=" + clothTypeName + ", clothTypeCode="
+				+ clothTypeCode + ", state=" + state + "]";
 	}
 
 }

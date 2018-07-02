@@ -28,4 +28,9 @@ public class UserDao {
 		return uRespository.findById(id).orElse(null);
 	}
 
+	public List<User> findByUAP(String username, String password) {
+		// TODO Auto-generated method stub
+		return uRespository.findByUsernameAndPassword(username, password);
+	}
+
 }

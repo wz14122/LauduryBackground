@@ -12,19 +12,29 @@ import com.example.demo.entity.User;
 public class UserService {
 
 	@Autowired
-	private UserDao uDao;
+	private UserDao dao;
 
 	public List<User> findAll() {
 
-		return uDao.findAll();
+		return dao.findAll();
 	}
-	
-	public User save(User user){
-		User u = uDao.save(user);
+
+	public User save(User user) {
+		User u = dao.save(user);
 		return u;
 	}
-	
+
+	/**
+	 * 通过用户名密码查询用户
+	 * @param username
+	 * @param password
+	 * @return
+	 */
+	public List<User> findByUAP(String username, String password) {
+		return dao.findByUAP(username, password);
+	}
+
 	public User findById(int id) {
-		return uDao.findById(id);
+		return dao.findById(id);
 	}
 }

@@ -88,15 +88,10 @@ public class User {
 		super();
 	}
 
-	public User(Integer u_Id, @NotNull int role, @NotNull String username, @NotNull String password,
-			@NotNull boolean enabled, int failLoginTimes) {
-		super();
-		this.u_Id = u_Id;
-		this.role = role;
-		this.username = username;
-		this.password = password;
-		this.enabled = enabled;
-		this.failLoginTimes = failLoginTimes;
+	@Override
+	public String toString() {
+		return "User [u_Id=" + u_Id + ", role=" + role + ", username=" + username + ", password=" + password
+				+ ", enabled=" + enabled + ", failLoginTimes=" + failLoginTimes + "]";
 	}
 
 }

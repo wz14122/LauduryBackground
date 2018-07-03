@@ -23,7 +23,7 @@ public class UserDao {
 		User u = uRespository.save(user);
 		return u;
 	}
-	
+
 	public User findById(int id) {
 		return uRespository.findById(id).orElse(null);
 	}

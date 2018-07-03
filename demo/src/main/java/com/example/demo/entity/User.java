@@ -16,8 +16,6 @@ public class User {
 	private Integer u_Id;
 
 	@NotNull
-	private int role;
-	@NotNull
 	private String username;
 	@NotNull
 	private String password;
@@ -32,14 +30,6 @@ public class User {
 
 	public void setU_Id(Integer u_Id) {
 		this.u_Id = u_Id;
-	}
-
-	public int getRole() {
-		return role;
-	}
-
-	public void setRole(int role) {
-		this.role = role;
 	}
 
 	public String getUsername() {
@@ -74,14 +64,12 @@ public class User {
 		this.enabled = enabled;
 	}
 
-	public User(@NotNull int role, @NotNull String username, @NotNull String password, @NotNull boolean enabled,
-			int failLoginTimes) {
+	public User(@NotNull String username, @NotNull String password) {
 		super();
-		this.role = role;
 		this.username = username;
 		this.password = password;
-		this.enabled = enabled;
-		this.failLoginTimes = failLoginTimes;
+		this.enabled = true;
+		this.failLoginTimes = 0;
 	}
 
 	public User() {
@@ -90,8 +78,8 @@ public class User {
 
 	@Override
 	public String toString() {
-		return "User [u_Id=" + u_Id + ", role=" + role + ", username=" + username + ", password=" + password
-				+ ", enabled=" + enabled + ", failLoginTimes=" + failLoginTimes + "]";
+		return "User [u_Id=" + u_Id + ", username=" + username + ", password=" + password + ", enabled=" + enabled
+				+ ", failLoginTimes=" + failLoginTimes + "]";
 	}
 
 }

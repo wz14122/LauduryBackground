@@ -18,8 +18,13 @@ public class LoginController {
 	@GetMapping(value = "/login")
 	public Result login(@RequestParam(value = "username", required = true) String username,
 			@RequestParam(value = "password", required = true) String password) {
-		System.out.println(username + " : " + password);
 		service.login(username, password);
 		return ResultUtil.success();
+	}
+	
+	@GetMapping(value = "/register")
+	public Result register(@RequestParam(value = "username", required = true) String username,
+			@RequestParam(value = "password", required = true) String password) {
+		return ResultUtil.success(service.save(username, password));
 	}
 }

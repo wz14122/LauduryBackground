@@ -26,6 +26,7 @@ public class UserService {
 
 	/**
 	 * 通过用户名密码查询用户
+	 * 
 	 * @param username
 	 * @param password
 	 * @return
@@ -37,4 +38,5 @@ public class UserService {
 	public User findById(int id) {
 		return dao.findById(id);
 	}
+
 }

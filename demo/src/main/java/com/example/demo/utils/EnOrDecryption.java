@@ -1,7 +1,7 @@
 package com.example.demo.utils;
 
 /**
- * @author adminn
+ * @author wz
  * 标准接口
  */
 public interface EnOrDecryption extends Decryption, Encryption {

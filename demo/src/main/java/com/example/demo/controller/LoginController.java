@@ -2,10 +2,13 @@ package com.example.demo.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.demo.modle.MyException;
 import com.example.demo.modle.Result;
+import com.example.demo.modle.ResultEnum;
 import com.example.demo.service.LoginService;
 import com.example.demo.utils.ResultUtil;
 
@@ -21,10 +24,17 @@ public class LoginController {
 		service.login(username, password);
 		return ResultUtil.success();
 	}
-	
-	@GetMapping(value = "/register")
+
+	@PostMapping(value = "/register")
 	public Result register(@RequestParam(value = "username", required = true) String username,
-			@RequestParam(value = "password", required = true) String password) {
-		return ResultUtil.success(service.save(username, password));
+			@RequestParam(value = "password", required = true) String password,
+			@RequestParam(value = "description") String description) {
+		try {
+			return ResultUtil.success(service.save(username, password, description));
+		} catch (CloneNotSupportedException e) {
+			// TODO Auto-generated catch block
+			throw new MyException(ResultEnum.UNKONW_ERROR);
+		}
 	}
+
 }

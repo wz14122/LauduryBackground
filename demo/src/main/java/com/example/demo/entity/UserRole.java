@@ -13,7 +13,7 @@ public class UserRole implements Cloneable {
 	@GeneratedValue
 	private Integer userRole_Id;
 	@NotNull
-	private Integer u_Id;
+	private String u_Id;
 	@NotNull
 	private Integer role_Id;
 	@Column(length = 100)
@@ -27,11 +27,11 @@ public class UserRole implements Cloneable {
 		this.userRole_Id = userRole_Id;
 	}
 
-	public Integer getU_Id() {
+	public String getU_Id() {
 		return u_Id;
 	}
 
-	public void setU_Id(Integer u_Id) {
+	public void setU_Id(String u_Id) {
 		this.u_Id = u_Id;
 	}
 
@@ -51,7 +51,7 @@ public class UserRole implements Cloneable {
 		this.description = description;
 	}
 
-	public UserRole(@NotNull Integer u_Id, @NotNull Integer role_Id, String description) {
+	public UserRole(@NotNull String u_Id, @NotNull Integer role_Id, String description) {
 		super();
 		this.u_Id = u_Id;
 		this.role_Id = role_Id;
@@ -69,7 +69,7 @@ public class UserRole implements Cloneable {
 	}
 
 	@Override
-	protected Object clone() throws CloneNotSupportedException {
+	public Object clone() throws CloneNotSupportedException {
 		// TODO Auto-generated method stub
 		return super.clone();
 	}

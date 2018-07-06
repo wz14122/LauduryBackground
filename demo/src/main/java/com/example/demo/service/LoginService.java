@@ -1,7 +1,6 @@
 package com.example.demo.service;
 
 import java.util.List;
-import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -32,9 +31,11 @@ public class LoginService {
 		// password加密后查询
 		EnOrDeContext base64 = this.getContext("Base64");
 		List<User> users = uService.findByUAP(username, base64.encode(password));
-
+		if(users.isEmpty()) {
+			throw new MyException(ResultEnum.NO_USER);
+		}
 		// 不存在则抛用户不存在，否则加密用户ID后封装到Session
-		User user = Optional.ofNullable(users.get(0)).orElseThrow(() -> new MyException(ResultEnum.NO_USER));
+		User user = users.get(0);
 		String user_id = user.getU_Id();
 		ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
 		HttpServletRequest request = attributes.getRequest();

@@ -27,7 +27,8 @@ public class ExceptionHandle {
 			return ResultUtil.error(500, "参数异常");
 		} else {
 			logger.info("[系统异常]{}", e);
-			return ResultUtil.error(-1, "未知错误");
+			//return ResultUtil.error(-1, "未知错误");
+			return ResultUtil.error(-1, e.getMessage());
 		}
 	}
 }

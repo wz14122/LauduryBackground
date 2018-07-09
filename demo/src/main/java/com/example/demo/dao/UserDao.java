@@ -24,7 +24,7 @@ public class UserDao {
 		return u;
 	}
 
-	public User findById(int id) {
+	public User findById(String id) {
 		return uRespository.findById(id).orElse(null);
 	}
 

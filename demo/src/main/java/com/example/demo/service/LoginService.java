@@ -17,6 +17,7 @@ import com.example.demo.modle.ResultEnum;
 import com.example.demo.utils.EnOrDeContext;
 import com.example.demo.utils.EnOrDeFactory;
 import com.example.demo.utils.EnOrDecryption;
+import com.example.demo.utils.DictionaryUtil;
 
 @Service
 public class LoginService {
@@ -35,11 +36,11 @@ public class LoginService {
 			throw new MyException(ResultEnum.NO_USER);
 		}
 		// 不存在则抛用户不存在，否则加密用户ID后封装到Session
-		User user = users.get(0);
-		String user_id = user.getU_Id();
+		String user_id = users.get(0).getU_Id();
+		String token = base64.encode(base64.encode(user_id) + DictionaryUtil.SALT_STRING);
 		ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
 		HttpServletRequest request = attributes.getRequest();
-		request.getSession().setAttribute("token", base64.encode(user_id + ""));
+		request.getSession().setAttribute("token", token);
 
 	}
 

@@ -1,5 +1,7 @@
 package com.example.demo.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,5 +16,9 @@ public class UserRoleService {
 	
 	public UserRole save(UserRole userRole) {
 		return dao.save(userRole);
+	}
+	
+	public List<UserRole> findByUId(String u_Id){
+		return dao.findByUId(u_Id);
 	}
 }

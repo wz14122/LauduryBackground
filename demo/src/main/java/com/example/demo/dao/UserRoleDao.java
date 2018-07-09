@@ -1,5 +1,7 @@
 package com.example.demo.dao;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,5 +16,10 @@ public class UserRoleDao {
 
 	public UserRole save(UserRole entity) {
 		return repository.save(entity);
+	}
+
+	public List<UserRole> findByUId(String u_Id) {
+		
+		return repository.findByUId(u_Id);
 	}
 }

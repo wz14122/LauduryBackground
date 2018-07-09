@@ -43,7 +43,7 @@ public class HomeController {
 	 * @throws MyException
 	 */
 	@GetMapping(value = "/user/{id}")
-	public Result findById(@PathVariable("id") Integer id) throws MyException {
+	public Result findById(@PathVariable("id") String id) throws MyException {
 		User user = Optional.ofNullable(uService.findById(id))
 				.orElseThrow(() -> new MyException(ResultEnum.ENTITY_NOTFOUND));
 		return ResultUtil.success(user);

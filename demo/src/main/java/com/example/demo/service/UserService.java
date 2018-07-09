@@ -35,7 +35,7 @@ public class UserService {
 		return dao.findByUAP(username, password);
 	}
 
-	public User findById(int id) {
+	public User findById(String id) {
 		return dao.findById(id);
 	}
 

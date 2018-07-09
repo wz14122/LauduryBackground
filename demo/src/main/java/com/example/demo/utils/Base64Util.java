@@ -9,15 +9,20 @@ public class Base64Util implements EnOrDecryption {
 
 	@Override
 	public String doDecryption(String context) {
-		// TODO Auto-generated method stub
 		Decoder decoder = Base64.getDecoder();
-		String result = decoder.decode(context).toString();
+		String result = "";
+		try {
+			result = new String(decoder.decode(context), "UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return result;
 	}
 
 	@Override
 	public String doEncrytion(String context) {
-		// TODO Auto-generated method stub
+
 		Encoder encoder = Base64.getEncoder();
 		byte[] text;
 		try {

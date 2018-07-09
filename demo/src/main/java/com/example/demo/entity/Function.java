@@ -17,6 +17,9 @@ public class Function implements Cloneable {
 	private String description;
 	@NotNull
 	private String functionUrl;
+	@NotNull
+	@Column(length = 10)
+	private String method;
 
 	public Integer getFunction_Id() {
 		return function_Id;
@@ -42,10 +45,19 @@ public class Function implements Cloneable {
 		this.functionUrl = functionUrl;
 	}
 
-	public Function(String description, String functionUrl) {
+	public String getMethod() {
+		return method;
+	}
+
+	public void setMethod(String method) {
+		this.method = method;
+	}
+
+	public Function(String description, @NotNull String functionUrl, @NotNull String method) {
 		super();
 		this.description = description;
 		this.functionUrl = functionUrl;
+		this.method = method;
 	}
 
 	public Function() {
@@ -55,7 +67,7 @@ public class Function implements Cloneable {
 	@Override
 	public String toString() {
 		return "Function [function_Id=" + function_Id + ", description=" + description + ", functionUrl=" + functionUrl
-				+ "]";
+				+ ", method=" + method + "]";
 	}
 
 	@Override

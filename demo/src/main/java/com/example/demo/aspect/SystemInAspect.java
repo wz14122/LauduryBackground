@@ -15,7 +15,9 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
+import com.example.demo.entity.Role;
 import com.example.demo.entity.UserRole;
+import com.example.demo.service.RoleService;
 import com.example.demo.service.UserRoleService;
 import com.example.demo.utils.EnOrDeContext;
 import com.example.demo.utils.EnOrDeFactory;
@@ -34,6 +36,9 @@ public class SystemInAspect {
 	
 	@Autowired
 	private UserRoleService urService;
+	
+	@Autowired
+	private RoleService roleService;
 	
 	@Pointcut("execution(* com.example.demo.controller..*(..))")
 	public void cut() {
@@ -78,10 +83,18 @@ public class SystemInAspect {
 		String[] id = idWithSalt.split(DictionaryUtil.SALT_STRING);
 		
 		String user_id = base64.decode(id[0]);
-		List<UserRole> roles = urService.findByUId(user_id);
-		System.out.println(roles);
+		List<UserRole> userRoles = urService.findByUId(user_id);
+		for (UserRole userRole : userRoles) {
+			this.getRole(userRole);
+		}
+		System.out.println(userRoles);
 		
 		return false;
+	}
+	
+	private Role getRole(UserRole userRole) {
+		roleService.findByUserRole(userRole);
+		return null;
 	}
 	
 	private EnOrDeContext getContext(String method) {

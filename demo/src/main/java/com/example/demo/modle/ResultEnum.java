@@ -6,7 +6,8 @@ public enum ResultEnum {
 	NO_USER(501, "用户不存在"),
 	FORM_INCOMPLETE(502, "表单不完整"),
 	ENTITY_NOTFOUND(503, "实体不存在"),
-	ILLEGAL_ARGUMENT(504, "参数异常");
+	ILLEGAL_ARGUMENT(504, "参数异常"),
+	SYSTEM_ERROR(500,"系统异常")
 	;
 
 	private Integer code;

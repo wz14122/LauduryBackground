@@ -11,36 +11,36 @@ public class UserRole implements Cloneable {
 
 	@Id
 	@GeneratedValue
-	private Integer userRole_Id;
+	private Integer userRoleId;
 	@NotNull
-	private String u_Id;
+	private String userId;
 	@NotNull
-	private Integer role_Id;
+	private Integer roleId;
 	@Column(length = 100)
 	private String description;
 
-	public Integer getUserRole_Id() {
-		return userRole_Id;
+	public Integer getUserRoleId() {
+		return userRoleId;
 	}
 
-	public void setUserRole_Id(Integer userRole_Id) {
-		this.userRole_Id = userRole_Id;
+	public void setUserRoleId(Integer userRoleId) {
+		this.userRoleId = userRoleId;
 	}
 
-	public String getU_Id() {
-		return u_Id;
+	public String getUserId() {
+		return userId;
 	}
 
-	public void setU_Id(String u_Id) {
-		this.u_Id = u_Id;
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
 
-	public Integer getRole_Id() {
-		return role_Id;
+	public Integer getRoleId() {
+		return roleId;
 	}
 
-	public void setRole_Id(Integer role_Id) {
-		this.role_Id = role_Id;
+	public void setRoleId(Integer roleId) {
+		this.roleId = roleId;
 	}
 
 	public String getDescription() {
@@ -51,10 +51,10 @@ public class UserRole implements Cloneable {
 		this.description = description;
 	}
 
-	public UserRole(@NotNull String u_Id, @NotNull Integer role_Id, String description) {
+	public UserRole(@NotNull String userId, @NotNull Integer roleId, String description) {
 		super();
-		this.u_Id = u_Id;
-		this.role_Id = role_Id;
+		this.userId = userId;
+		this.roleId = roleId;
 		this.description = description;
 	}
 
@@ -64,7 +64,7 @@ public class UserRole implements Cloneable {
 
 	@Override
 	public String toString() {
-		return "UserRole [userRole_Id=" + userRole_Id + ", u_Id=" + u_Id + ", role_Id=" + role_Id + ", description="
+		return "UserRole [userRoleId=" + userRoleId + ", userId=" + userId + ", roleId=" + roleId + ", description="
 				+ description + "]";
 	}
 

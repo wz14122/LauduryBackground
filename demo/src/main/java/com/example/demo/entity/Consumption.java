@@ -22,52 +22,52 @@ public class Consumption {
 	@Id
 	@GenericGenerator(name = "idGenerator", strategy = "uuid")
 	@GeneratedValue(generator = "idGenerator")
-	private int consumption_id;
+	private int consumptionId;
 	@NotNull
 	@Temporal(TemporalType.DATE)
-	private Date consumptionDate; 	// 消费时间
+	private Date consumptionDate; // 消费时间
 	@NotNull
 	@Temporal(TemporalType.DATE)
-	private Date suggestDate;		// 建議取貨時間
+	private Date suggestDate; // 建議取貨時間
 	@NotNull
-	private int user_id; 			// 处置人
+	private int userId; // 处置人
 	@NotNull
-	private int customer_id; 		// 消费者ID
+	private int customerId; // 消费者ID
 	@NotNull
-	private int cloth_id; 			// 衣服类型
+	private int clothId; // 衣服类型
 	@Column(length = 100)
 	private String remark;
 
-	public int getConsumption_id() {
-		return consumption_id;
+	public int getConsumptionId() {
+		return consumptionId;
 	}
 
-	public void setConsumption_id(int consumption_id) {
-		this.consumption_id = consumption_id;
+	public void setConsumptionId(int consumptionId) {
+		this.consumptionId = consumptionId;
 	}
 
-	public int getUser_id() {
-		return user_id;
+	public int getUserId() {
+		return userId;
 	}
 
-	public void setUser_id(int user_id) {
-		this.user_id = user_id;
+	public void setUserId(int userId) {
+		this.userId = userId;
 	}
 
-	public int getCustomer_id() {
-		return customer_id;
+	public int getCustomerId() {
+		return customerId;
 	}
 
-	public void setCustomer_id(int customer_id) {
-		this.customer_id = customer_id;
+	public void setCustomerId(int customerId) {
+		this.customerId = customerId;
 	}
 
-	public int getCloth_id() {
-		return cloth_id;
+	public int getClothId() {
+		return clothId;
 	}
 
-	public void setCloth_id(int cloth_id) {
-		this.cloth_id = cloth_id;
+	public void setClothId(int clothId) {
+		this.clothId = clothId;
 	}
 
 	public String getRemark() {
@@ -98,23 +98,22 @@ public class Consumption {
 		super();
 	}
 
-	public Consumption(@NotNull Date consumptionDate, @NotNull Date suggestDate, @NotNull int user_id,
-			@NotNull int customer_id, @NotNull int cloth_id, String remark) {
+	public Consumption(@NotNull Date consumptionDate, @NotNull Date suggestDate, @NotNull int userId,
+			@NotNull int customerId, @NotNull int clothId, String remark) {
 		super();
 		this.consumptionDate = consumptionDate;
 		this.suggestDate = suggestDate;
-		this.user_id = user_id;
-		this.customer_id = customer_id;
-		this.cloth_id = cloth_id;
+		this.userId = userId;
+		this.customerId = customerId;
+		this.clothId = clothId;
 		this.remark = remark;
 	}
 
 	@Override
 	public String toString() {
-		return "Consumption [consumption_id=" + consumption_id + ", consumptionDate=" + consumptionDate
-				+ ", suggestDate=" + suggestDate + ", user_id=" + user_id + ", customer_id=" + customer_id
-				+ ", cloth_id=" + cloth_id + ", remark=" + remark + "]";
+		return "Consumption [consumptionId=" + consumptionId + ", consumptionDate=" + consumptionDate + ", suggestDate="
+				+ suggestDate + ", userId=" + userId + ", customerId=" + customerId + ", clothId=" + clothId
+				+ ", remark=" + remark + "]";
 	}
 
-	
 }

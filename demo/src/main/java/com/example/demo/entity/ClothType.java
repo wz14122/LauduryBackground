@@ -14,7 +14,7 @@ public class ClothType {
 
 	@Id
 	@GeneratedValue
-	private int clothType_id;
+	private int clothTypeId;
 	@NotNull
 	private String clothTypeName;
 	@NotNull
@@ -22,12 +22,12 @@ public class ClothType {
 	@NotNull
 	private int state;
 
-	public int getClothType_id() {
-		return clothType_id;
+	public int getClothTypeId() {
+		return clothTypeId;
 	}
 
-	public void setClothType_id(int clothType_id) {
-		this.clothType_id = clothType_id;
+	public void setClothTypeId(int clothTypeId) {
+		this.clothTypeId = clothTypeId;
 	}
 
 	public String getClothTypeName() {
@@ -76,7 +76,7 @@ public class ClothType {
 
 	@Override
 	public String toString() {
-		return "ClothType [cloth_id=" + clothType_id + ", clothTypeName=" + clothTypeName + ", clothTypeCode="
+		return "ClothType [clothTypeId=" + clothTypeId + ", clothTypeName=" + clothTypeName + ", clothTypeCode="
 				+ clothTypeCode + ", state=" + state + "]";
 	}
 

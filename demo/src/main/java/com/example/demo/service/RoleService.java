@@ -18,7 +18,7 @@ public class RoleService {
 	private RoleDao dao;
 
 	public Optional<Role> findByUserRole(UserRole userRole) {
-		Integer roleId = Optional.ofNullable(userRole.getRole_Id())
+		Integer roleId = Optional.ofNullable(userRole.getRoleId())
 				.orElseThrow(() -> new MyException(ResultEnum.SYSTEM_ERROR));
 		return dao.findById(roleId);
 	}

@@ -9,38 +9,38 @@ import javax.validation.constraints.NotNull;
 public class RoleFunction {
 
 	@Id
-	private Integer roleFunction_Id;
+	private Integer roleFunctionId;
 
 	@NotNull
-	private Integer role_Id;
+	private Integer roleId;
 	@NotNull
-	private Integer function_Id;
-	
+	private Integer functionId;
+
 	@Column(length = 100)
 	private String description;
 
-	public Integer getRoleFunction_Id() {
-		return roleFunction_Id;
+	public Integer getRoleFunctionId() {
+		return roleFunctionId;
 	}
 
-	public void setRoleFunction_Id(Integer roleFunction_Id) {
-		this.roleFunction_Id = roleFunction_Id;
+	public void setRoleFunctionId(Integer roleFunctionId) {
+		this.roleFunctionId = roleFunctionId;
 	}
 
-	public Integer getRole_Id() {
-		return role_Id;
+	public Integer getRoleId() {
+		return roleId;
 	}
 
-	public void setRole_Id(Integer role_Id) {
-		this.role_Id = role_Id;
+	public void setRoleId(Integer roleId) {
+		this.roleId = roleId;
 	}
 
-	public Integer getFunction_Id() {
-		return function_Id;
+	public Integer getFunctionId() {
+		return functionId;
 	}
 
-	public void setFunction_Id(Integer function_Id) {
-		this.function_Id = function_Id;
+	public void setFunctionId(Integer functionId) {
+		this.functionId = functionId;
 	}
 
 	public String getDescription() {
@@ -51,10 +51,10 @@ public class RoleFunction {
 		this.description = description;
 	}
 
-	public RoleFunction(@NotNull Integer role_Id, @NotNull Integer function_Id, String description) {
+	public RoleFunction(@NotNull Integer roleId, @NotNull Integer functionId, String description) {
 		super();
-		this.role_Id = role_Id;
-		this.function_Id = function_Id;
+		this.roleId = roleId;
+		this.functionId = functionId;
 		this.description = description;
 	}
 
@@ -64,8 +64,8 @@ public class RoleFunction {
 
 	@Override
 	public String toString() {
-		return "RoleFunction [roleFunction_Id=" + roleFunction_Id + ", role_Id=" + role_Id + ", function_Id="
-				+ function_Id + ", description=" + description + "]";
+		return "RoleFunction [roleFunctionId=" + roleFunctionId + ", roleId=" + roleId + ", functionId=" + functionId
+				+ ", description=" + description + "]";
 	}
 
 }

@@ -13,29 +13,29 @@ public class Cloth {
 
 	@Id
 	@GeneratedValue
-	private int cloth_id;
+	private int clothId;
 	@NotNull
-	private int clothType_id; // 不为空，实在没有种类就是其他
+	private int clothTypeId; // 不为空，实在没有种类就是其他
 	@NotNull
 	private String clothName;
 	@NotNull
 	private double price; // 某种衣服的清洗价格
 	private String remark; // 有些特殊情况需要照顾的
 
-	public int getCloth_id() {
-		return cloth_id;
+	public int getClothId() {
+		return clothId;
 	}
 
-	public void setCloth_id(int cloth_id) {
-		this.cloth_id = cloth_id;
+	public void setClothId(int clothId) {
+		this.clothId = clothId;
 	}
 
-	public int getClothType_id() {
-		return clothType_id;
+	public int getClothTypeId() {
+		return clothTypeId;
 	}
 
-	public void setClothType_id(int clothType_id) {
-		this.clothType_id = clothType_id;
+	public void setClothTypeId(int clothTypeId) {
+		this.clothTypeId = clothTypeId;
 	}
 
 	public String getClothName() {
@@ -62,9 +62,9 @@ public class Cloth {
 		this.remark = remark;
 	}
 
-	public Cloth(@NotNull int clothType_id, @NotNull String clothName, @NotNull double price, String remark) {
+	public Cloth(@NotNull int clothTypeId, @NotNull String clothName, @NotNull double price, String remark) {
 		super();
-		this.clothType_id = clothType_id;
+		this.clothTypeId = clothTypeId;
 		this.clothName = clothName;
 		this.price = price;
 		this.remark = remark;
@@ -76,7 +76,7 @@ public class Cloth {
 
 	@Override
 	public String toString() {
-		return "Cloth [cloth_id=" + cloth_id + ", clothType_id=" + clothType_id + ", clothName=" + clothName
+		return "Cloth [clothId=" + clothId + ", clothTypeId=" + clothTypeId + ", clothName=" + clothName
 				+ ", price=" + price + ", remark=" + remark + "]";
 	}
 

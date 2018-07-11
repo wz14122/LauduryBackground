@@ -14,7 +14,7 @@ public class Customer {
 
 	@Id
 	@GeneratedValue
-	private int customer_id;
+	private int customerId;
 	@NotNull
 	@Column(length = 20)
 	private String customerName;
@@ -24,12 +24,12 @@ public class Customer {
 	private String address; // 用户住址可为空
 	private String remark; // 用户其他信息
 
-	public int getCustomer_id() {
-		return customer_id;
+	public int getCustomerId() {
+		return customerId;
 	}
 
-	public void setCustomer_id(int customer_id) {
-		this.customer_id = customer_id;
+	public void setCustomerId(int customerId) {
+		this.customerId = customerId;
 	}
 
 	public String getCustomerName() {
@@ -92,7 +92,7 @@ public class Customer {
 
 	@Override
 	public String toString() {
-		return "Customer [customer_id=" + customer_id + ", customerName=" + customerName + ", customerGender="
+		return "Customer [customerId=" + customerId + ", customerName=" + customerName + ", customerGender="
 				+ customerGender + ", wechatId=" + wechatId + ", address=" + address + ", remark=" + remark + "]";
 	}
 

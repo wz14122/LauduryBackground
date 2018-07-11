@@ -1,6 +1,7 @@
 package com.example.demo.modle;
 
 public enum ResultEnum {
+	ILLEGAL_ACCESS(0, "非法入侵"),
 	UNKONW_ERROR(500, "未知错误"),
 	SUCCESS(200, "成功"),
 	NO_USER(501, "用户不存在"),

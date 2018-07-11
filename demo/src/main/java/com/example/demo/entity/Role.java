@@ -9,7 +9,7 @@ import javax.validation.constraints.NotNull;
 public class Role {
 
 	@Id
-	private Integer role_Id;
+	private Integer roleId;
 
 	@NotNull
 	@Column(length = 20)
@@ -17,12 +17,12 @@ public class Role {
 	@Column(length = 100)
 	private String description;
 
-	public Integer getRole_Id() {
-		return role_Id;
+	public Integer getRoleId() {
+		return roleId;
 	}
 
-	public void setRole_Id(Integer role_Id) {
-		this.role_Id = role_Id;
+	public void setRoleId(Integer roleId) {
+		this.roleId = roleId;
 	}
 
 	public String getRoleName() {
@@ -53,7 +53,7 @@ public class Role {
 
 	@Override
 	public String toString() {
-		return "Role [role_Id=" + role_Id + ", roleName=" + roleName + ", description=" + description + "]";
+		return "Role [roleId=" + roleId + ", roleName=" + roleName + ", description=" + description + "]";
 	}
 
 }

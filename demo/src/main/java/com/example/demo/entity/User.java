@@ -13,7 +13,7 @@ public class User {
 	@Id
 	@GenericGenerator(name = "idGenerator", strategy = "uuid")
 	@GeneratedValue(generator = "idGenerator")
-	private String u_Id;
+	private String userId;
 
 	@NotNull
 	private String username;
@@ -24,12 +24,12 @@ public class User {
 
 	private int failLoginTimes;
 
-	public String getU_Id() {
-		return u_Id;
+	public String getUserId() {
+		return userId;
 	}
 
-	public void setU_Id(String u_Id) {
-		this.u_Id = u_Id;
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
 
 	public String getUsername() {
@@ -78,7 +78,7 @@ public class User {
 
 	@Override
 	public String toString() {
-		return "User [u_Id=" + u_Id + ", username=" + username + ", password=" + password + ", enabled=" + enabled
+		return "User [userId=" + userId + ", username=" + username + ", password=" + password + ", enabled=" + enabled
 				+ ", failLoginTimes=" + failLoginTimes + "]";
 	}
 

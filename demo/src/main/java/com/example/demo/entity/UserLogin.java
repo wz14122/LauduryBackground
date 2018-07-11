@@ -21,9 +21,9 @@ public class UserLogin {
 	@Id
 	@GenericGenerator(name = "idGenerator", strategy = "uuid")
 	@GeneratedValue(generator = "idGenerator")
-	private int userLogin_Id;
+	private int userLoginId;
 	@NotNull
-	private int u_Id; // User表主键
+	private int userId; // User表主键
 
 	@Column(length = 50)
 	private String lastLoginIp;
@@ -35,20 +35,20 @@ public class UserLogin {
 	@Temporal(TemporalType.DATE)
 	private Date lastFailLoginDate;
 
-	public int getUserLogin_Id() {
-		return userLogin_Id;
+	public int getUserLoginId() {
+		return userLoginId;
 	}
 
-	public void setUserLogin_Id(int userLogin_Id) {
-		this.userLogin_Id = userLogin_Id;
+	public void setUserLoginId(int userLoginId) {
+		this.userLoginId = userLoginId;
 	}
 
-	public int getU_Id() {
-		return u_Id;
+	public int getUserId() {
+		return userId;
 	}
 
-	public void setU_Id(int u_Id) {
-		this.u_Id = u_Id;
+	public void setUserId(int userId) {
+		this.userId = userId;
 	}
 
 	public String getLastLoginIp() {
@@ -87,10 +87,10 @@ public class UserLogin {
 		super();
 	}
 
-	public UserLogin(@NotNull int u_Id, String lastLoginIp, Date lastLoginDate, String lastFailLoginIP,
+	public UserLogin(@NotNull int userId, String lastLoginIp, Date lastLoginDate, String lastFailLoginIP,
 			Date lastFailLoginDate) {
 		super();
-		this.u_Id = u_Id;
+		this.userId = userId;
 		this.lastLoginIp = lastLoginIp;
 		this.lastLoginDate = lastLoginDate;
 		this.lastFailLoginIP = lastFailLoginIP;
@@ -99,7 +99,7 @@ public class UserLogin {
 
 	@Override
 	public String toString() {
-		return "UserLogin [userLogin_Id=" + userLogin_Id + ", u_Id=" + u_Id + ", lastLoginIp=" + lastLoginIp
+		return "UserLogin [userLoginId=" + userLoginId + ", userId=" + userId + ", lastLoginIp=" + lastLoginIp
 				+ ", lastLoginDate=" + lastLoginDate + ", lastFailLoginIP=" + lastFailLoginIP + ", lastFailLoginDate="
 				+ lastFailLoginDate + "]";
 	}

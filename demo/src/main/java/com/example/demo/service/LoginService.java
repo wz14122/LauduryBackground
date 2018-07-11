@@ -36,7 +36,7 @@ public class LoginService {
 			throw new MyException(ResultEnum.NO_USER);
 		}
 		// 不存在则抛用户不存在，否则加密用户ID后封装到Session
-		String user_id = users.get(0).getU_Id();
+		String user_id = users.get(0).getUserId();
 		String token = base64.encode(base64.encode(user_id) + DictionaryUtil.SALT_STRING);
 		ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
 		HttpServletRequest request = attributes.getRequest();
@@ -56,9 +56,9 @@ public class LoginService {
 	public User save(String username, String password, String description) throws CloneNotSupportedException {
 		EnOrDeContext SHA_256 = this.getContext("SHA-256");
 		User user = uService.save(new User(username, SHA_256.encode(password)));
-		UserRole userRole = new UserRole(user.getU_Id(), 3, description);
+		UserRole userRole = new UserRole(user.getUserId(), 3, description);
 		UserRole userRole2 = (UserRole) userRole.clone();
-		userRole2.setRole_Id(4);
+		userRole2.setRoleId(4);
 		urService.save(userRole);
 		urService.save(userRole2);
 		return user;

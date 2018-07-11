@@ -11,7 +11,7 @@ public class Function implements Cloneable {
 
 	@Id
 	@GeneratedValue
-	private Integer function_Id;
+	private Integer functionId;
 
 	@Column(length = 20)
 	private String description;
@@ -21,12 +21,12 @@ public class Function implements Cloneable {
 	@Column(length = 10)
 	private String method;
 
-	public Integer getFunction_Id() {
-		return function_Id;
+	public Integer getFunctionId() {
+		return functionId;
 	}
 
-	public void setFunction_Id(Integer function_Id) {
-		this.function_Id = function_Id;
+	public void setFunctionId(Integer functionId) {
+		this.functionId = functionId;
 	}
 
 	public String getDescription() {
@@ -66,7 +66,7 @@ public class Function implements Cloneable {
 
 	@Override
 	public String toString() {
-		return "Function [function_Id=" + function_Id + ", description=" + description + ", functionUrl=" + functionUrl
+		return "Function [functionId=" + functionId + ", description=" + description + ", functionUrl=" + functionUrl
 				+ ", method=" + method + "]";
 	}
 

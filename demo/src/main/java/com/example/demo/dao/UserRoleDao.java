@@ -18,8 +18,8 @@ public class UserRoleDao {
 		return repository.save(entity);
 	}
 
-	public List<UserRole> findByUId(String u_Id) {
+	public List<UserRole> findByUId(String userId) {
 		
-		return repository.findByUId(u_Id);
+		return repository.findByUserId(userId);
 	}
 }

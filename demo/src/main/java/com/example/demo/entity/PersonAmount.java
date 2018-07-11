@@ -21,9 +21,9 @@ public class PersonAmount {
 	@Id
 	@GenericGenerator(name = "idGenerator", strategy = "uuid")
 	@GeneratedValue(generator = "idGenerator")
-	private int personAmount_id;
+	private int personAmountId;
 	@NotNull
-	private int customer_id;
+	private int customerId;
 	@NotNull
 	private double total; // 总金额
 	@NotNull
@@ -34,20 +34,22 @@ public class PersonAmount {
 	@Temporal(TemporalType.DATE)
 	private Date consumptionDate; // 二次录入时间，即消费时间
 
-	public int getPersonAmount_id() {
-		return personAmount_id;
+	
+
+	public int getPersonAmountId() {
+		return personAmountId;
 	}
 
-	public void setPersonAmount_id(int personAmount_id) {
-		this.personAmount_id = personAmount_id;
+	public void setPersonAmountId(int personAmountId) {
+		this.personAmountId = personAmountId;
 	}
 
-	public int getCustomer_id() {
-		return customer_id;
+	public int getCustomerId() {
+		return customerId;
 	}
 
-	public void setCustomer_id(int customer_id) {
-		this.customer_id = customer_id;
+	public void setCustomerId(int customerId) {
+		this.customerId = customerId;
 	}
 
 	public double getTotal() {
@@ -82,10 +84,10 @@ public class PersonAmount {
 		this.consumptionDate = consumptionDate;
 	}
 
-	public PersonAmount(@NotNull int customer_id, @NotNull double total, @NotNull int times, String remark,
+	public PersonAmount(@NotNull int customerId, @NotNull double total, @NotNull int times, String remark,
 			@NotNull Date consumptionDate) {
 		super();
-		this.customer_id = customer_id;
+		this.customerId = customerId;
 		this.total = total;
 		this.times = times;
 		this.remark = remark;
@@ -98,7 +100,7 @@ public class PersonAmount {
 
 	@Override
 	public String toString() {
-		return "PersonAmount [personAmount_id=" + personAmount_id + ", customer_id=" + customer_id + ", total=" + total
+		return "PersonAmount [personAmountId=" + personAmountId + ", customerId=" + customerId + ", total=" + total
 				+ ", times=" + times + ", remark=" + remark + ", consumptionDate=" + consumptionDate + "]";
 	}
 

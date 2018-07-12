@@ -74,19 +74,22 @@ public class SystemInAspect {
 		logger.info("CLASS_METHOD : " + pjp.getSignature().getDeclaringTypeName() + "." + pjp.getSignature().getName());
 		logger.info("ARGS : " + Arrays.toString(pjp.getArgs()));
 
-		String method = pjp.getSignature().getDeclaringTypeName() + "." + pjp.getSignature().getName();
+		String classMethod = pjp.getSignature().getDeclaringTypeName() + "." + pjp.getSignature().getName();
+		String httpMehtod = request.getMethod();
 		Object obj = pjp.proceed();
-
-		if (method.equals("com.example.demo.controller.LoginController.login")) {
+		
+		System.out.println(classMethod);
+		
+		if (classMethod.equals("com.example.demo.controller.LoginController.login")) {
 			return obj;
 		}
-		if (method.equals("com.example.demo.controller.LoginController.register")) {
+		if (classMethod.equals("com.example.demo.controller.LoginController.register")) {
 			return obj;
 		}
 		if (token == null || token.isEmpty()) {
 			return ResultUtil.error(-1, "用户未登录");
 		}
-		if (!checkPermission(token, method)) {
+		if (!checkPermission(token, classMethod, httpMehtod)) {
 			return ResultUtil.error(-1, "用户权限不足");
 		}
 
@@ -100,7 +103,7 @@ public class SystemInAspect {
 	 * @param method
 	 * @return
 	 */
-	private boolean checkPermission(String token, String method) {
+	private boolean checkPermission(String token, String method, String httpMehtod) {
 
 		// 解密后合理性判断
 		EnOrDeContext base64 = this.getContext("Base64");
@@ -119,7 +122,8 @@ public class SystemInAspect {
 			List<Function> list = this.getFunction(userRole);
 			for (Function function : list) {
 
-				if (function != null && function.getFunctionUrl().equals("") && function.getMethod().equals("")) {
+				if (function != null && function.getFunctionUrl().equals(method)
+						&& function.getMethod().equals(httpMehtod)) {
 					return true;
 				}
 			}
@@ -137,7 +141,8 @@ public class SystemInAspect {
 	private List<Function> getFunction(UserRole userRole) {
 		ArrayList<Function> list = new ArrayList<>(10);
 		Optional<Role> role = roleService.findByUserRole(userRole);
-		List<RoleFunction> roleFunctions = role.map(r -> roleFunService.findByRoleId(r.getRoleId())).orElseThrow(() -> new MyException(ResultEnum.SYSTEM_ERROR));
+		List<RoleFunction> roleFunctions = role.map(r -> roleFunService.findByRoleId(r.getRoleId()))
+				.orElseThrow(() -> new MyException(ResultEnum.SYSTEM_ERROR));
 		for (RoleFunction roleFunction : roleFunctions) {
 			list.add(funService.findById(roleFunction.getFunctionId()).orElse(null));
 		}

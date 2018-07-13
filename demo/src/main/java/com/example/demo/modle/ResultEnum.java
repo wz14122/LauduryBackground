@@ -1,14 +1,16 @@
 package com.example.demo.modle;
 
 public enum ResultEnum {
-	ILLEGAL_ACCESS(0, "非法入侵"),
-	UNKONW_ERROR(500, "未知错误"),
+	ILLEGAL_ACCESS(-1, "非法入侵"),
+	UNKONW_ERROR(0, "未知错误"),
 	SUCCESS(200, "成功"),
-	NO_USER(501, "用户不存在"),
-	FORM_INCOMPLETE(502, "表单不完整"),
-	ENTITY_NOTFOUND(503, "实体不存在"),
-	ILLEGAL_ARGUMENT(504, "参数异常"),
-	SYSTEM_ERROR(500,"系统异常")
+	USER_REPEAT(500, "用户重复"),
+	NO_USER(500, "用户不存在"),
+	PASSWORD_ERROR(500, "密码错误"),
+	FORM_INCOMPLETE(503, "表单不完整"),
+	ENTITY_NOTFOUND(504, "实体不存在"),
+	ILLEGAL_ARGUMENT(505, "参数异常"),
+	SYSTEM_ERROR(0, "系统异常"),
 	;
 
 	private Integer code;

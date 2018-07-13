@@ -17,7 +17,7 @@ public class EnOrDeFactory {
 			enOrDecryption = new Base64Util();
 			break;
 		case "SHA-256":
-			enOrDecryption = new Base64Util();
+			enOrDecryption = new SHA256Util();
 			break;
 			
 		default:

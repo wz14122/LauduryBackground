@@ -5,12 +5,11 @@ import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
-
-import org.hibernate.annotations.GenericGenerator;
 
 /**
  * @author wz 登录状态
@@ -19,21 +18,15 @@ import org.hibernate.annotations.GenericGenerator;
 public class UserLogin {
 
 	@Id
-	@GenericGenerator(name = "idGenerator", strategy = "uuid")
-	@GeneratedValue(generator = "idGenerator")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int userLoginId;
 	@NotNull
-	private int userId; // User表主键
+	private String userId; // User表主键
 
 	@Column(length = 50)
-	private String lastLoginIp;
-	@Temporal(TemporalType.DATE)
-	private Date lastLoginDate;
-
-	@Column(length = 50)
-	private String lastFailLoginIP;
-	@Temporal(TemporalType.DATE)
-	private Date lastFailLoginDate;
+	private String loginIp;
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date loginDate;
 
 	public int getUserLoginId() {
 		return userLoginId;
@@ -43,65 +36,45 @@ public class UserLogin {
 		this.userLoginId = userLoginId;
 	}
 
-	public int getUserId() {
+	public String getUserId() {
 		return userId;
 	}
 
-	public void setUserId(int userId) {
+	public void setUserId(String userId) {
 		this.userId = userId;
 	}
 
-	public String getLastLoginIp() {
-		return lastLoginIp;
+	public String getLoginIp() {
+		return loginIp;
 	}
 
-	public void setLastLoginIp(String lastLoginIp) {
-		this.lastLoginIp = lastLoginIp;
+	public void setLoginIp(String loginIp) {
+		this.loginIp = loginIp;
 	}
 
-	public Date getLastLoginDate() {
-		return lastLoginDate;
+	public Date getLoginDate() {
+		return loginDate;
 	}
 
-	public void setLastLoginDate(Date lastLoginDate) {
-		this.lastLoginDate = lastLoginDate;
-	}
-
-	public String getLastFailLoginIP() {
-		return lastFailLoginIP;
-	}
-
-	public void setLastFailLoginIP(String lastFailLoginIP) {
-		this.lastFailLoginIP = lastFailLoginIP;
-	}
-
-	public Date getLastFailLoginDate() {
-		return lastFailLoginDate;
-	}
-
-	public void setLastFailLoginDate(Date lastFailLoginDate) {
-		this.lastFailLoginDate = lastFailLoginDate;
+	public void setLoginDate(Date loginDate) {
+		this.loginDate = loginDate;
 	}
 
 	public UserLogin() {
 		super();
 	}
 
-	public UserLogin(@NotNull int userId, String lastLoginIp, Date lastLoginDate, String lastFailLoginIP,
-			Date lastFailLoginDate) {
+	public UserLogin(@NotNull String userId, String loginIp, Date loginDate) {
 		super();
 		this.userId = userId;
-		this.lastLoginIp = lastLoginIp;
-		this.lastLoginDate = lastLoginDate;
-		this.lastFailLoginIP = lastFailLoginIP;
-		this.lastFailLoginDate = lastFailLoginDate;
+		this.loginIp = loginIp;
+		this.loginDate = loginDate;
 	}
 
 	@Override
 	public String toString() {
-		return "UserLogin [userLoginId=" + userLoginId + ", userId=" + userId + ", lastLoginIp=" + lastLoginIp
-				+ ", lastLoginDate=" + lastLoginDate + ", lastFailLoginIP=" + lastFailLoginIP + ", lastFailLoginDate="
-				+ lastFailLoginDate + "]";
+		return "UserLogin [userLoginId=" + userLoginId + ", userId=" + userId + ", loginIp=" + loginIp + ", loginDate="
+				+ loginDate + "]";
 	}
 
 }

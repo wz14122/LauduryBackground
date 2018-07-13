@@ -71,6 +71,7 @@ public class SystemInAspect {
 		logger.info("URL : " + request.getRequestURL().toString());
 		logger.info("HTTP_METHOD : " + request.getMethod());
 		logger.info("IP : " + request.getRemoteAddr());
+		logger.info("IP2 : " + request.getLocalAddr());
 		logger.info("CLASS_METHOD : " + pjp.getSignature().getDeclaringTypeName() + "." + pjp.getSignature().getName());
 		logger.info("ARGS : " + Arrays.toString(pjp.getArgs()));
 

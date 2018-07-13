@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.demo.modle.Result;
+import com.example.demo.moudle.Result;
 import com.example.demo.service.WaterService;
 import com.example.demo.utils.ResultUtil;
 

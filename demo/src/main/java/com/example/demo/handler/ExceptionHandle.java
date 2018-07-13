@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.example.demo.modle.MyException;
-import com.example.demo.modle.Result;
+import com.example.demo.moudle.MyException;
+import com.example.demo.moudle.Result;
 import com.example.demo.utils.ResultUtil;
 
 @ControllerAdvice

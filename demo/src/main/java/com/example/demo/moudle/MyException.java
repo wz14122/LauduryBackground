@@ -1,4 +1,4 @@
-package com.example.demo.modle;
+package com.example.demo.moudle;
 
 public class MyException extends RuntimeException {
 

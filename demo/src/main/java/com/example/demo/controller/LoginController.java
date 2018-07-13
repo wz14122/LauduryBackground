@@ -6,9 +6,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.demo.modle.MyException;
-import com.example.demo.modle.Result;
-import com.example.demo.modle.ResultEnum;
+import com.example.demo.moudle.MyException;
+import com.example.demo.moudle.Result;
+import com.example.demo.moudle.ResultEnum;
 import com.example.demo.service.LoginService;
 import com.example.demo.utils.ResultUtil;
 

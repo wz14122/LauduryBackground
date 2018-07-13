@@ -1,7 +1,7 @@
 package com.example.demo.utils;
 
-import com.example.demo.modle.MyException;
-import com.example.demo.modle.ResultEnum;
+import com.example.demo.moudle.MyException;
+import com.example.demo.moudle.ResultEnum;
 
 /**
  * @author wz 加密解密工厂类

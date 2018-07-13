@@ -1,6 +1,6 @@
 package com.example.demo.utils;
 
-import com.example.demo.modle.Result;
+import com.example.demo.moudle.Result;
 
 public class ResultUtil {
 

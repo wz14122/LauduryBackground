@@ -1,4 +1,4 @@
-package com.example.demo.modle;
+package com.example.demo.moudle;
 
 public enum ResultEnum {
 	ILLEGAL_ACCESS(-1, "非法入侵"),

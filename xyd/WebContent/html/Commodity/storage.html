@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>商品入库</title>
+<link href="/xyd/css/bootstrap/bootstrap.min.css" rel="stylesheet">
+<link href="/xyd/css/bootstrap/bootstrap-table.css" rel="stylesheet">
+</head>
+<body>
+  <!-- 头选择商品部分 -->
+  <nav aria-label="breadcrumb">
+	<ol class="breadcrumb">
+	  <li class="breadcrumb-item">衣服 : </li>
+      <li class="breadcrumb-item"><a href="#">Home</a></li>
+	  <li class="breadcrumb-item"><a href="#">Library</a></li>
+	  <li class="breadcrumb-item"><a href="#">Data</a></li>
+	</ol>
+	<ol class="breadcrumb">
+      <li class="breadcrumb-item">裤子 : </li>
+	  <li class="breadcrumb-item"><a href="#">Library</a></li>
+	  <li class="breadcrumb-item active" aria-current="page">Data</li>
+	</ol>
+	<ol class="breadcrumb">
+	  <li class="breadcrumb-item">鞋子: </li>
+      <li class="breadcrumb-item"><a id="add" href="#">Home</a></li>
+	  <li class="breadcrumb-item"><a href="#">Library</a></li>
+	  <li class="breadcrumb-item active" aria-current="page">Data</li>
+	</ol>
+  </nav>
+  
+  <!-- table数据展示部分 -->
+  <div id="main">
+  	<div id="toolbar">
+    	<button id="remove" class="btn btn-default">remove</button>
+    </div>
+    <table id="table" class="container table-striped"
+    	data-toggle="table"
+        data-toolbar="#toolbar"
+        data-pagination="true"
+        data-show-export="true">
+        <thead>
+	        <tr>
+	        	<th data-field="state" data-checkbox="true"></th>
+	            <th data-field="id">#</th>
+	            <th data-field="name">条目名称</th>
+	            <th data-field="color">颜色</th>
+	            <th data-field="price">推荐单价</th>
+	        </tr>
+        </thead>
+    </table>
+    
+    <form class="form-inline">
+        <div class="form-group row col-sm-12">
+		    <label for="total_amount" class="col-sm-2 col-form-label">总金额</label>
+		    <div class="col-sm-3">
+		    	<input type="text" class="form-control" id="total_amount" placeholder="总金额">
+		    </div>
+		    <label for="staticEmail" class="col-sm-2 col-form-label">折扣</label>
+		    <div class="col-sm-3">
+		    	<select class="form-control" id="discount">
+			      <option>9.8折</option>
+			      <option>9.5折</option>
+			      <option>9.0折</option>
+			      <option>8.8折</option>
+			      <option>8.5折</option>
+			      <option>8.0折</option>
+			    </select>
+		    </div>
+		    <button id="confirm_order" type="submit" class="col-sm-2 btn btn-primary mb-2">确认订单</button>
+		</div>
+	</form>
+    
+    </div>
+    
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script>window.jQuery || document.write('<script src="/xyd/js/bootstrap/jquery-slim.min.js"><\/script>')</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script src="/xyd/js/bootstrap/bootstrap-table.js"></script>
+<script type="text/javascript">
+$(function () {
+	var $table = $('#table'),
+	$add = $('#add');
+	$remove = $('#remove');
+	
+	$add.click(function () {
+	    var randomId = 100 + ~~(Math.random() * 100);
+	   
+	    var text = ' <input type="text" class="form-control-sm" value="123">'
+	    var select = '<select class="form-control">';
+	    	select+= '<option selected="selected">黑色</option>';
+	    	select+= '<option>黑色</option>';
+	    	select+= '<option>黑色</option>';
+	    	select+= '<option>黑色</option>';
+	    	select+= '<option>黑色</option>';
+	    	select+= '<option>黑色</option>';
+	    	select+= '<option>黑色</option>';
+	    	select+= '<option>黑色</option>';
+	    	select+= '</select>';
+	    var operate = "<button>删除</button>";
+	    $table.bootstrapTable('insertRow', {
+	        index: 1,
+	        row: {
+	            id: randomId,
+	            name: text,
+	            color: select,
+	            price: randomId,
+	            operate: operate
+	        }
+	    });
+	});
+	
+	$remove.click(function () {
+        var ids = $.map($table.bootstrapTable('getSelections'), function (row) {
+            return row.id;
+        });
+        $table.bootstrapTable('remove', {
+            field: 'id',
+            values: ids
+        });
+    });
+});
+
+</script>
+</body>
+</html>

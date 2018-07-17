@@ -22,7 +22,7 @@
 	</ol>
 	<ol class="breadcrumb">
 	  <li class="breadcrumb-item">鞋子: </li>
-      <li class="breadcrumb-item"><a id="add" href="#">Home</a></li>
+      <li class="breadcrumb-item"><a id="add" value="120.5" href="#">Home</a></li>
 	  <li class="breadcrumb-item"><a href="#">Library</a></li>
 	  <li class="breadcrumb-item active" aria-current="page">Data</li>
 	</ol>
@@ -44,33 +44,78 @@
 	            <th data-field="id">#</th>
 	            <th data-field="name">条目名称</th>
 	            <th data-field="color">颜色</th>
-	            <th data-field="price">推荐单价</th>
+	            <th data-field="nums">数量</th>
+	            <th data-field="price">推荐单价(元)</th>
+	            <th data-field="component">备注</th>
 	        </tr>
         </thead>
     </table>
     
     <form class="form-inline">
-        <div class="form-group row col-sm-12">
-		    <label for="total_amount" class="col-sm-2 col-form-label">总金额</label>
-		    <div class="col-sm-3">
-		    	<input type="text" class="form-control" id="total_amount" placeholder="总金额">
-		    </div>
-		    <label for="staticEmail" class="col-sm-2 col-form-label">折扣</label>
-		    <div class="col-sm-3">
-		    	<select class="form-control" id="discount">
-			      <option>9.8折</option>
-			      <option>9.5折</option>
-			      <option>9.0折</option>
-			      <option>8.8折</option>
-			      <option>8.5折</option>
-			      <option>8.0折</option>
-			    </select>
-		    </div>
-		    <button id="confirm_order" type="submit" class="col-sm-2 btn btn-primary mb-2">确认订单</button>
-		</div>
+    	<div class="form-group row col-sm-12">
+    		<div class="col-sm-10"></div>
+    		<button id="go_check" type="button" class="btn btn-primary" data-toggle="modal" data-target="#checkModal" style="margin-top:5px;">
+    			去结算
+    		</button>
+    	</div>
 	</form>
     
-    </div>
+  </div>
+  
+	<!-- Modal -->
+  <div class="modal fade" id="checkModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title" id="exampleModalLabel">订单信息</h5>
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      </div>
+	      <div class="modal-body">
+	        <div id="itemList">
+	        	
+	        </div>
+	        <hr/>
+	        <div class="container">
+			  <div class="row">
+			    <div class="col-sm-4">
+			      	<label for="discount" class="col-form-label">整体折扣</label>
+			    </div>
+			    <div class="col-sm-8">
+			        <select class="form-control" id="discount">
+			    	  <option value="100">无折扣</option>
+				      <option value="98">9.8折</option>
+				      <option value="95">9.5折</option>
+				      <option value="90">9.0折</option>
+				      <option value="88">8.8折</option>
+				      <option value="85">8.5折</option>
+				      <option value="80">8.0折</option>
+				    </select>
+			    </div>
+			  </div>
+			  <div class="row" style="margin-top:5px;">
+			    <div class="col-sm-4">
+			      <label for="total_amount" class="col-form-label">总金额</label>
+			    </div>
+			    <div class="col-sm-8">
+			    	<div class="input-group">
+						<div class="input-group-prepend">
+					    	<span class="input-group-text">￥</span>
+					  	</div>
+					  	<input type="text" class="form-control" id="total_amount" aria-label="Amount (to the nearest dollar)" value="0">
+					</div>
+			    </div>
+			  </div>
+			</div>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭订单</button>
+	        <button type="button" class="btn btn-primary">确认订单</button>
+	      </div>
+	    </div>
+	  </div>
+  </div>
     
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script>window.jQuery || document.write('<script src="/xyd/js/bootstrap/jquery-slim.min.js"><\/script>')</script>
@@ -78,38 +123,95 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 <script src="/xyd/js/bootstrap/bootstrap-table.js"></script>
 <script type="text/javascript">
+var total = 0;
+//传入单价，返回总价.永远表示无折扣总价
+function getTotal(itemprice){
+	var lastPrice = parseFloat(total);
+  	total = lastPrice + itemprice;
+	return total;
+}
+//传入折扣，返回总价
+function getTotalByDiscount(discount){
+	var result = total*(discount/100);
+	return result;
+}
+//展示总价
+function showTotal(total){
+	$("#total_amount").val(total);
+}
 $(function () {
-	var $table = $('#table'),
-	$add = $('#add');
-	$remove = $('#remove');
 	
+	var $table = $('#table');
+	var $add = $('#add');
 	$add.click(function () {
 	    var randomId = 100 + ~~(Math.random() * 100);
-	   
-	    var text = ' <input type="text" class="form-control-sm" value="123">'
+	    var itemName = $(this).html();
+	    var itemprice = parseFloat($(this).attr("value"));
+	    var text = ' <input type="text" class="form-control" value="'+itemName+'">'
 	    var select = '<select class="form-control">';
-	    	select+= '<option selected="selected">黑色</option>';
-	    	select+= '<option>黑色</option>';
-	    	select+= '<option>黑色</option>';
-	    	select+= '<option>黑色</option>';
-	    	select+= '<option>黑色</option>';
-	    	select+= '<option>黑色</option>';
-	    	select+= '<option>黑色</option>';
-	    	select+= '<option>黑色</option>';
+	    	select+= '<option value="black">黑色</option>';
+	    	select+= '<option value="black">黑色</option>';
+	    	select+= '<option value="black">黑色</option>';
+	    	select+= '<option value="black">黑色</option>';
+	    	select+= '<option value="black">黑色</option>';
+	    	select+= '<option value="black">黑色</option>';
+	    	select+= '<option value="black">黑色</option>';
+	    	select+= '<option value="black">黑色</option>';
 	    	select+= '</select>';
-	    var operate = "<button>删除</button>";
+	    var nums = '<select class="form-control">';
+    		nums+= '<option value="1">1</option>';
+    		nums+= '<option value="2">2</option>';
+    		nums+= '<option value="3">3</option>';
+    		nums+= '<option value="4">4</option>';
+    		nums+= '<option value="5">5</option>';
+    		nums+= '</select>';
+	    var component = ' <input type="text" class="form-control" placeholder="备注可不填写">';
+	    
+	    /* 获取总价格,后展示 */
+	    showTotal(getTotal(itemprice));
+	    
 	    $table.bootstrapTable('insertRow', {
 	        index: 1,
 	        row: {
 	            id: randomId,
 	            name: text,
 	            color: select,
-	            price: randomId,
-	            operate: operate
+	            nums: nums,
+	            price: itemprice,
+	            component: component
 	        }
 	    });
 	});
 	
+	//去结算
+	$("#go_check").click(function(){
+		//全选
+		$("#itemList").empty();
+		
+		$table.bootstrapTable('checkAll');
+		$.map($table.bootstrapTable('getSelections'), function (row) {
+			var itemColor = $(row.color).val();
+			var itemName = $(row.name).val();
+			var itemNums = parseFloat($(row.nums).val());
+			var itemPrice = parseFloat(row.price);
+			var itemComponent = $(row.component).val()
+			var content = '<p>'+itemColor+"&nbsp;"+itemName+"&nbsp;"+itemPrice+" * "+itemNums+" 备注:"+itemComponent+'</p>'
+			$("#itemList").append(content);
+            console.log(row);
+			console.log($(row.nums).val());
+        });
+	})
+	
+	//折扣
+	$("#discount").change(function(){
+		console.log(total);
+		var discount = parseFloat($("#discount").val());
+		var disTotal = getTotalByDiscount(discount);
+		showTotal(disTotal);
+	});
+	
+	//删除
+	var $remove = $('#remove');
 	$remove.click(function () {
         var ids = $.map($table.bootstrapTable('getSelections'), function (row) {
             return row.id;
@@ -120,7 +222,6 @@ $(function () {
         });
     });
 });
-
 </script>
 </body>
 </html>

@@ -40,7 +40,6 @@ public class UserService {
 	}
 
 	public Optional<User> findByUsername(String username) {
-		// TODO Auto-generated method stub
 		return dao.findByUsername(username);
 	}
 	

@@ -14,7 +14,6 @@ public class WaterService {
 	private ClothTypeRepository ct_repository;
 
 	public List<String> getList() {
-		// TODO Auto-generated method stub
 		return ct_repository.getListLeftJoinCloth();
 	}
 

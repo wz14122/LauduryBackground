@@ -21,7 +21,7 @@ public class ClothType {
 	@NotNull
 	private int clothTypeCode;
 	@NotNull
-	private int state;
+	private int state;	//存在性
 
 	public int getClothTypeId() {
 		return clothTypeId;

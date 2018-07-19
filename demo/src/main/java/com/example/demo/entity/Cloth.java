@@ -22,6 +22,8 @@ public class Cloth {
 	@NotNull
 	private double price; // 某种衣服的清洗价格
 	private String remark; // 有些特殊情况需要照顾的
+	@NotNull
+	private int priority;	//优先级 
 
 	public int getClothId() {
 		return clothId;
@@ -62,23 +64,43 @@ public class Cloth {
 	public void setRemark(String remark) {
 		this.remark = remark;
 	}
+	
+	public int getPriority() {
+		return priority;
+	}
 
-	public Cloth(@NotNull int clothTypeId, @NotNull String clothName, @NotNull double price, String remark) {
+	public void setPriority(int priority) {
+		this.priority = priority;
+	}
+
+	
+
+	public Cloth(@NotNull int clothTypeId, @NotNull String clothName, @NotNull double price, String remark,
+			int priority) {
 		super();
 		this.clothTypeId = clothTypeId;
 		this.clothName = clothName;
 		this.price = price;
 		this.remark = remark;
+		this.priority = priority;
 	}
 
 	public Cloth() {
 		super();
 	}
+	
+	public Cloth(@NotNull int clothTypeId, @NotNull String clothName, @NotNull double price) {
+		super();
+		this.clothTypeId = clothTypeId;
+		this.clothName = clothName;
+		this.price = price;
+		this.priority = 1;
+	}
 
 	@Override
 	public String toString() {
-		return "Cloth [clothId=" + clothId + ", clothTypeId=" + clothTypeId + ", clothName=" + clothName
-				+ ", price=" + price + ", remark=" + remark + "]";
+		return "Cloth [clothId=" + clothId + ", clothTypeId=" + clothTypeId + ", clothName=" + clothName + ", price="
+				+ price + ", remark=" + remark + ", priority=" + priority + "]";
 	}
 
 }

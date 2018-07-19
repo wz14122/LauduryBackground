@@ -16,7 +16,6 @@ public class UserDao {
 	private UserRespository uRespository;
 
 	public List<User> findAll() {
-		// TODO Auto-generated method stub
 		return uRespository.findAll();
 	}
 
@@ -34,12 +33,10 @@ public class UserDao {
 	}
 
 	public List<User> findByUAP(String username, String password) {
-		// TODO Auto-generated method stub
 		return uRespository.findByUsernameAndPassword(username, password);
 	}
 
 	public Optional<User> findByUsername(String username) {
-		// TODO Auto-generated method stub
 		return uRespository.findByUsername(username);
 	}
 

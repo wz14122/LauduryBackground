@@ -10,7 +10,7 @@
   <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
 </head>
 <body>
- 
+
 <div class="layui-btn-group demoTable">
   <button class="layui-btn" data-type="getCheckData">获取选中行数据</button>
   <button class="layui-btn" data-type="getCheckLength">获取选中数目</button>
@@ -28,12 +28,27 @@
   <input type="checkbox" name="lock" value="{{d.id}}" title="锁定" lay-filter="lockDemo" {{ d.id == 10006 ? 'checked' : '' }}>
 </script>
 
-              
           
 <script src="/xyd/resources/layui/layui.js" charset="utf-8"></script>
 <!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 --> 
  
 <script>
+var colorMap = { '1' : '黑色', '2' : '蓝色', '3' : '绿色', '4' : '红色', '5' : '紫色'};
+var numsMap = {1 : 1,2 : 2, 3 : 3};
+var colorContent = "";
+
+layui.use(['jquery'], function(){
+    var $ = jQuery = layui.$;
+    function getColorContent(colorMap){
+    	colorContent = '<select name="nums" lay-verify="">';
+        $.each(colorMap, function(i) {     
+        	colorContent += '<option value="'+ i +'">'+ colorMap[i] +'</option>' ;
+        });
+        colorContent += '</select>'
+    };
+    getColorContent(colorMap);
+})
+
 layui.use('table', function(){
   var table = layui.table
   ,form = layui.form;
@@ -51,7 +66,13 @@ layui.use('table', function(){
       ,{field:'city', title:'城市'}
       ,{field:'wealth', title: '财富', minWidth:120, sort: true}
       ,{field:'sex', title:'性别', width:85, templet: '#switchTpl', unresize: true}
-      ,{field:'lock', title:'是否锁定', width:110, templet: '#checkboxTpl', unresize: true}
+      ,{field:'lock', title:'是否锁定', width:110, templet: '#checkboxTpl', unresize: true},
+      {
+    	  field:'nums', title:'数量', templet: function(d){
+    		  console.log(colorContent);
+    	      return colorContent;
+          }
+      }
     ]]
     ,page: true
   });
@@ -87,7 +108,14 @@ layui.use('table', function(){
     var type = $(this).data('type');
     active[type] ? active[type].call(this) : '';
   });
+  
 });
+
+layui.use('form', function(){
+    var form = layui.form; 
+    form.render();
+}); 
+
 </script>
 
 </body>

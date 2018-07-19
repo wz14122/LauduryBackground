@@ -68,7 +68,7 @@
 	    <div class="modal-content">
 	      <div class="modal-header">
 	        <h5 class="modal-title" id="exampleModalLabel">订单信息</h5>
-	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	        <button id="close" type="button" class="close" data-dismiss="modal" aria-label="Close">
 	          <span aria-hidden="true">&times;</span>
 	        </button>
 	      </div>
@@ -110,8 +110,8 @@
 			</div>
 	      </div>
 	      <div class="modal-footer">
-	        <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭订单</button>
-	        <button type="button" class="btn btn-primary">确认订单</button>
+	        <button id="dismiss" type="button" class="btn btn-secondary" data-dismiss="modal">关闭订单</button>
+	        <button id="confirm" type="button" class="btn btn-primary">确认订单</button>
 	      </div>
 	    </div>
 	  </div>
@@ -124,10 +124,13 @@
 <script src="/xyd/js/bootstrap/bootstrap-table.js"></script>
 <script type="text/javascript">
 var total = 0;
-//传入单价，返回总价.永远表示无折扣总价
-function getTotal(itemprice){
-	var lastPrice = parseFloat(total);
-  	total = lastPrice + itemprice;
+//永远表示无折扣总价
+function getTotal(map){
+  	
+  	$.each(map,function(key){
+  		total += parseFloat(map[key].num) * parseFloat(map[key].price);
+  	});
+  	
 	return total;
 }
 //传入折扣，返回总价
@@ -139,12 +142,34 @@ function getTotalByDiscount(discount){
 function showTotal(total){
 	$("#total_amount").val(total);
 }
+
+/* 
+ * 临时map相关，去结算后要手动清除
+ */
 var map = new Object(); // or var map = {};
-
-function get(k) {
-    return map[k];
+//传入相关信息，像map中添加一个对象。
+function createNewInstance(rowId, name, color, num, price, component){
+	var rowContent = new Object();
+    rowContent.id = rowId;
+    rowContent.name = name;
+    rowContent.color = color;
+    rowContent.num = num;
+    rowContent.price = price;
+    rowContent.component = component;
+    return rowContent;
+     
 }
-
+function mapSet(rowContent){
+    map[rowContent.id] = rowContent; 
+}
+function getContent(){
+	var content = "";
+	$.each(map, function(i){ 
+		content += '<p>'+map[i].name+"&nbsp;"+map[i].color+"&nbsp;"+map[i].price+" * "+map[i].num+" 备注:"+map[i].component+'</p>'
+	});
+	return content;
+}
+/* 临时map结束 */
 
 $(function () {
 	
@@ -157,29 +182,29 @@ $(function () {
 	    var itemName = $(this).html();
 	    var i = 0;
 	    var itemprice = parseFloat($(this).attr("value"));
-	    var text = ' <input type="text" class="form-control" value="'+itemName+'">'
+	    var text = ' <input type="text" class="form-control name_input" value="'+itemName+'">'
 	    var select = '<select class="form-control color_select">';
-	    	select+= '<option value="black">黑色</option>';
-	    	select+= '<option value="black">黑色</option>';
-	    	select+= '<option value="black">黑色</option>';
-	    	select+= '<option value="black">黑色</option>';
-	    	select+= '<option value="black">黑色</option>';
-	    	select+= '<option value="black">黑色</option>';
-	    	select+= '<option value="black">黑色</option>';
-	    	select+= '<option value="black">黑色</option>';
+	    	select+= '<option value="1">黑色</option>';
+	    	select+= '<option value="2">蓝色</option>';
+	    	select+= '<option value="3">绿色</option>';
+	    	select+= '<option value="4">黄色</option>';
+	    	select+= '<option value="5">红色</option>';
 	    	select+= '</select>';
-	    var nums = '<select class="form-control nums_select">';
+	    var nums = '<select class="form-control num_select">';
     		nums+= '<option value="1">1</option>';
     		nums+= '<option value="2">2</option>';
     		nums+= '<option value="3">3</option>';
     		nums+= '<option value="4">4</option>';
     		nums+= '<option value="5">5</option>';
     		nums+= '</select>';
-	    var component = ' <input type="text" class="form-control" placeholder="备注可不填写">';
+	    var component = ' <input type="text" class="form-control component_input" placeholder="备注可不填写">';
 	    
-	    /* 获取总价格,后展示 */
-	    showTotal(getTotal(itemprice));
-	    
+	    //向临时map<String, Object>内增加一个对象
+	    var rowContent = createNewInstance(randomId, itemName, 1, 1, itemprice, "");
+		mapSet(rowContent);
+		
+	    //插入一条新数据，注意此处还有bug，之前的所有数据，都会变成新添加的。
+	    // TODO Auto-generated catch block
 	    $table.bootstrapTable('insertRow', {
 	        index: i++,
 	        row: {
@@ -195,30 +220,36 @@ $(function () {
 	
 	//去结算
 	$("#go_check").click(function(){
-		//全选
+		//先清除
 		$("#itemList").empty();
-		
+		total = 0;
+		//再全选,好看些
 		$table.bootstrapTable('checkAll');
-		$.map($table.bootstrapTable('getSelections'), function (row) {
-			console.log($(row.nums).val());
-			var itemColor = $(row.color).val();
-			var itemName = $(row.name).val();
-			var itemNums = parseFloat($(row.nums).children(".nums_select").children("option:selected").val());
-			var itemPrice = parseFloat(row.price);
-			var itemComponent = $(row.component).val()
-			var content = '<p>'+itemColor+"&nbsp;"+itemName+"&nbsp;"+itemPrice+" * "+itemNums+" 备注:"+itemComponent+'</p>'
-			$("#itemList").append(content);
-            console.log(row);
-            /* console.log($(row.nums).val()); */
-        });
+		//append添加内容
+		$("#itemList").append(getContent());
+		/* 获取总价格,后展示 */
+	    showTotal(getTotal(map));
+		
 	})
 	
 	//折扣
 	$("#discount").change(function(){
-		console.log(total);
 		var discount = parseFloat($("#discount").val());
 		var disTotal = getTotalByDiscount(discount);
 		showTotal(disTotal);
+	});
+	
+	//取消订单
+	$("#dismiss").click(function(){
+		//清空total
+	});
+	//确定订单
+	$("#confirm").click(function(){
+		//确认订单后清空临时map和total
+		map = new Object();
+	});
+	//关闭订单
+	$("#close").click(function(){
 	});
 	
 	//删除
@@ -233,27 +264,28 @@ $(function () {
         });
     });
 	
-	//更换下拉菜单选项后写入临时map
-	$table.on("change",".nums_select",function(){
+	/* 行内容变更存入临时map相关 */
+	$table.on("change",".num_select",function(){
 		var rowId = $(this).parent().siblings().eq(1).html();
-		var itemName = $($(this).parent().siblings().eq(2).html()).val();
-		var color = $(this).parent().siblings().eq(3).val();
-		var nums = $(this).val();
-		var price = $(this).parent().siblings().eq(5).html();
-		var component = $(this).parent().siblings().eq(6).val();
-		
-        var rowContent = new Object();
-        rowContent.id = rowId;
-        rowContent.name = itemName;
-        rowContent.color = color;
-        rowContent.nums = nums;
-        
-        map[rowId] = rowContent;
-        
-        console.log(map[rowId]);
-        console.log(get[rowId]);
-        
+		var num = $(this).val();
+        map[rowId].num = num;
     });
+	$table.on("change",".color_select",function(){
+		var rowId = $(this).parent().siblings().eq(1).html();
+		var color = $(this).val();
+        map[rowId].color = color;
+    });
+	$table.on("change",".name_input",function(){
+		var rowId = $(this).parent().siblings().eq(1).html();
+		var itemName = $(this).val();
+        map[rowId].name = itemName;
+    });
+    $table.on("change",".component_input",function(){
+		var rowId = $(this).parent().siblings().eq(1).html();
+		var component = $(this).val();
+        map[rowId].component = component;
+    });
+	/* 存入临时map结束 */
 	
 	/* $("#table").on("change",".add_select",function(){
         $(this). find(".picBox_in").show()

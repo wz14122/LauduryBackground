@@ -106,6 +106,12 @@
                   Year-end sale
                 </a>
               </li>
+              <li class="nav-item">
+                <a id="cloth_type" class="nav-link" href="#">
+                  <span data-feather="file-text"></span>
+                  	服饰管理管理
+                </a>
+              </li>
             </ul>
           </div>
         </nav>
@@ -148,8 +154,13 @@
 	    	$("#product").click(function(){
 	    		$(".nav-item a").removeClass("active");
 	    		$("#product").addClass("active");
-	    		$("#mainiframe").attr("src","/xyd/html/Commodity/storage.html")
+	    		$("#mainiframe").attr("src","/xyd/html/Commodity/storage.html");
 	    	});
+	    	$("#cloth_type").click(function(){
+	    		$(".nav-item a").removeClass("active");
+	    		$("#cloth_type").addClass("active");
+	    		$("#mainiframe").attr("src","/xyd/html/Commodity/storage.html");
+	    	})
 	    });
     </script>
   </body>

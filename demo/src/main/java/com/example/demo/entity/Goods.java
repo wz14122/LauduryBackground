@@ -19,7 +19,7 @@ import org.hibernate.annotations.GenericGenerator;
  */
 @Entity
 @Table(indexes = { @Index(columnList = "customerId", unique = false) })
-public class Goods {
+public class Goods implements Cloneable{
 
 	@Id
 	@GenericGenerator(name = "idGenerator", strategy = "uuid")
@@ -134,4 +134,20 @@ public class Goods {
 		this.remark = remark;
 	}
 
+	@Override
+	public String toString() {
+		return "Goods [goodsId=" + goodsId + ", clothId=" + clothId + ", consumptionId=" + consumptionId
+				+ ", customerId=" + customerId + ", haveFetch=" + haveFetch + ", fetchDate=" + fetchDate + ", price="
+				+ price + ", remark=" + remark + ", getGoodsId()=" + getGoodsId() + ", getClothId()=" + getClothId()
+				+ ", getConsumptionId()=" + getConsumptionId() + ", getCustomerId()=" + getCustomerId()
+				+ ", isHaveFetch()=" + isHaveFetch() + ", getFetchDate()=" + getFetchDate() + ", getPrice()="
+				+ getPrice() + ", getRemark()=" + getRemark() + ", getClass()=" + getClass() + ", hashCode()="
+				+ hashCode() + ", toString()=" + super.toString() + "]";
+	}
+	
+	@Override
+	protected Object clone() throws CloneNotSupportedException {
+		// TODO Auto-generated method stub
+		return super.clone();
+	}
 }

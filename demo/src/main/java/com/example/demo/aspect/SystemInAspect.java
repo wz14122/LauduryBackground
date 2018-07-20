@@ -81,7 +81,9 @@ public class SystemInAspect {
 		
 		System.out.println(classMethod);
 		
-		if (classMethod.equals("com.example.demo.controller.LoginController.login")) {
+		//暂时关闭验证
+		// TODO 开启验证
+		/*if (classMethod.equals("com.example.demo.controller.LoginController.login")) {
 			return obj;
 		}
 		if (classMethod.equals("com.example.demo.controller.LoginController.register")) {
@@ -92,7 +94,7 @@ public class SystemInAspect {
 		}
 		if (!checkPermission(token, classMethod, httpMehtod)) {
 			return ResultUtil.error(-1, "用户权限不足");
-		}
+		}*/
 
 		return obj;
 	}

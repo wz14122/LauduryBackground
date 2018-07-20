@@ -8,24 +8,7 @@
 </head>
 <body>
   <!-- 头选择商品部分 -->
-  <nav aria-label="breadcrumb">
-	<ol class="breadcrumb">
-	  <li class="breadcrumb-item">衣服 : </li>
-      <li class="breadcrumb-item"><a href="#">Home</a></li>
-	  <li class="breadcrumb-item"><a href="#">Library</a></li>
-	  <li class="breadcrumb-item"><a href="#">Data</a></li>
-	</ol>
-	<ol class="breadcrumb">
-      <li class="breadcrumb-item">裤子 : </li>
-	  <li class="breadcrumb-item"><a href="#">Library</a></li>
-	  <li class="breadcrumb-item active" aria-current="page">Data</li>
-	</ol>
-	<ol class="breadcrumb">
-	  <li class="breadcrumb-item">鞋子: </li>
-      <li class="breadcrumb-item"><a id="add" value="120.5" href="#">Home</a></li>
-	  <li class="breadcrumb-item"><a href="#">Library</a></li>
-	  <li class="breadcrumb-item active" aria-current="page">Data</li>
-	</ol>
+  <nav id="nav" aria-label="breadcrumb">
   </nav>
   
   <!-- table数据展示部分 -->
@@ -117,12 +100,39 @@
 	  </div>
   </div>
     
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script>window.jQuery || document.write('<script src="/xyd/js/bootstrap/jquery-slim.min.js"><\/script>')</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 <script src="/xyd/js/bootstrap/bootstrap-table.js"></script>
 <script type="text/javascript">
+var cloths ;
+function initial(data){
+	cloths = data;
+	var clothTypeList = cloths.data.ClothType;
+	var olContent = "";
+	$.each(clothTypeList, function( index, value ) {
+		olContent += contentOlFromObj(value);
+	});
+	$("#nav").append(olContent);
+}
+function contentOlFromObj(value){
+	var content = '';
+	content += '<ol id="'+value.clothTypeCode+'" class="breadcrumb">';
+	content += ' <li class="breadcrumb-item">'+ value.clothTypeName +' : </li>';
+	content += contentLiFromList(cloths.data[value.clothTypeCode]);
+	content += '</ol>';
+	return content;
+}
+function contentLiFromList(list){
+	var content = '';
+	$.each(list, function(index, value){
+		content += ' <li class="breadcrumb-item"><a class="add_item" value="'+value.price+'" href="#">'+ value.clothName +'</a></li>';
+	});
+	return content;
+}
+
+/* 计算相关 */
 var total = 0;
 //永远表示无折扣总价
 function getTotal(map){
@@ -141,6 +151,16 @@ function getTotalByDiscount(discount){
 //展示总价
 function showTotal(total){
 	$("#total_amount").val(total);
+}
+/* 计算相关结束 */
+
+/* 整理数据格式 */
+function mapToArray(map){
+	var list = new Array();
+	$.each(map,function(i){
+		list.push(map[i]);
+	});
+	return list;
 }
 
 /* 
@@ -162,23 +182,32 @@ function createNewInstance(rowId, name, color, num, price, component){
 function mapSet(rowContent){
     map[rowContent.id] = rowContent; 
 }
-function getContent(){
+function getMapContent(){
 	var content = "";
 	$.each(map, function(i){ 
 		content += '<p>'+map[i].name+"&nbsp;"+map[i].color+"&nbsp;"+map[i].price+" * "+map[i].num+" 备注:"+map[i].component+'</p>'
 	});
 	return content;
 }
-/* 临时map结束 */
+/* 临时map结束 
+ */
 
 $(function () {
-	
-	var changedList = [""];
-	
 	var $table = $('#table');
-	var $add = $('#add');
-	$add.click(function () {
-	    var randomId = 100 + ~~(Math.random() * 100);
+	
+	//获取服饰类型相关信息
+	$.get("http://127.0.0.1:8003/xyd/bdm/allClothMsg", function(data){
+		if(data.code==200){
+			initial(data);
+		}else{
+			alert("系统出错！请联系管理员");
+			return ;
+		}
+	});
+	
+	var $nav = $("#nav");
+	$nav.on("click",".add_item",function(){
+		var randomId = 100 + ~~(Math.random() * 100);
 	    var itemName = $(this).html();
 	    var i = 0;
 	    var itemprice = parseFloat($(this).attr("value"));
@@ -226,7 +255,7 @@ $(function () {
 		//再全选,好看些
 		$table.bootstrapTable('checkAll');
 		//append添加内容
-		$("#itemList").append(getContent());
+		$("#itemList").append(getMapContent());
 		/* 获取总价格,后展示 */
 	    showTotal(getTotal(map));
 		
@@ -246,7 +275,13 @@ $(function () {
 	//确定订单
 	$("#confirm").click(function(){
 		//确认订单后清空临时map和total
-		map = new Object();
+		console.log(map);
+		$.post("http://127.0.0.1:8003/xyd/consumption/order",{
+			"order" : JSON.stringify(mapToArray(map))
+		},function(data){
+			console.log(data);
+		});
+		//map = new Object();
 	});
 	//关闭订单
 	$("#close").click(function(){
@@ -263,6 +298,8 @@ $(function () {
             values: ids
         });
     });
+	
+	
 	
 	/* 行内容变更存入临时map相关 */
 	$table.on("change",".num_select",function(){

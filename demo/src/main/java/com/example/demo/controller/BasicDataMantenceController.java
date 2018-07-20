@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.moudle.Result;
 import com.example.demo.service.BasicDataMantenceService;
+import com.example.demo.utils.ResultUtil;
 
 /**
  * @author wz
@@ -21,7 +22,7 @@ public class BasicDataMantenceController {
 	
 	@GetMapping(value = "/allClothMsg")
 	public Result allClothMsg() {
-		return null;
+		return ResultUtil.success(service.allClothMsg());
 	}
 	
 }

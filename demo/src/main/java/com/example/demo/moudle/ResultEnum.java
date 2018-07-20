@@ -11,6 +11,7 @@ public enum ResultEnum {
 	ENTITY_NOTFOUND(504, "实体不存在"),
 	ILLEGAL_ARGUMENT(505, "参数异常"),
 	SYSTEM_ERROR(0, "系统异常"),
+	CONDITION_EMPTY(0, "搜索条件为空"),
 	;
 
 	private Integer code;

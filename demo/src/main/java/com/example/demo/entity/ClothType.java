@@ -4,6 +4,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -11,6 +13,7 @@ import javax.validation.constraints.NotNull;
  * 大类：包括衣服、鞋子等等
  */
 @Entity
+@Table(uniqueConstraints = { @UniqueConstraint(columnNames = { "clothTypeCode" }) })
 public class ClothType {
 
 	@Id
@@ -21,7 +24,9 @@ public class ClothType {
 	@NotNull
 	private int clothTypeCode;
 	@NotNull
-	private int state;	//存在性
+	private boolean state;	//存在性
+	
+	private static final boolean STATE = true;
 
 	public int getClothTypeId() {
 		return clothTypeId;
@@ -47,11 +52,11 @@ public class ClothType {
 		this.clothTypeCode = clothTypeCode;
 	}
 
-	public int getState() {
+	public boolean isState() {
 		return state;
 	}
 
-	public void setState(int state) {
+	public void setState(boolean state) {
 		this.state = state;
 	}
 
@@ -65,10 +70,10 @@ public class ClothType {
 	 * @return 默认类型对象状态为1
 	 */
 	public ClothType(@NotNull String clothTypeName, @NotNull int clothTypeCode) {
-		this(clothTypeName, clothTypeCode, 1);
+		this(clothTypeName, clothTypeCode, STATE);
 	}
 
-	public ClothType(@NotNull String clothTypeName, @NotNull int clothTypeCode, @NotNull int state) {
+	public ClothType(@NotNull String clothTypeName, @NotNull int clothTypeCode, boolean state) {
 		super();
 		this.clothTypeName = clothTypeName;
 		this.clothTypeCode = clothTypeCode;

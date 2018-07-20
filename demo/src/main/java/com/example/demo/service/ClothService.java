@@ -9,12 +9,16 @@ import com.example.demo.dao.ClothDao;
 import com.example.demo.entity.Cloth;
 
 @Service
-public class ClothSerivce {
+public class ClothService {
 
 	@Autowired
 	private ClothDao dao;
 	
 	public List<Cloth> findAll(){
 		return dao.findAll();
+	}
+	
+	public List<Cloth> findByClothTypeCode(int clothTypeId){
+		return dao.findByClothTypeCode(clothTypeId);
 	}
 }

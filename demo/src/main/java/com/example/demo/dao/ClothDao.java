@@ -17,4 +17,8 @@ public class ClothDao {
 	public List<Cloth> findAll(){
 		return repository.findAll();
 	}
+
+	public List<Cloth> findByClothTypeCode(int clothTypeId) {
+		return repository.findByClothTypeCode(clothTypeId);
+	}
 }

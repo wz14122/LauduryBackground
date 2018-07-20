@@ -33,7 +33,7 @@ public class LoginController {
 			return ResultUtil.success(service.save(username, password, description));
 		} catch (CloneNotSupportedException e) {
 			// TODO Auto-generated catch block
-			throw new MyException(ResultEnum.UNKONW_ERROR);
+			throw new MyException(ResultEnum.SYSTEM_ERROR);
 		}
 	}
 

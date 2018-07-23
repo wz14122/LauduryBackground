@@ -22,7 +22,7 @@ public class Consumption {
 	@Id
 	@GenericGenerator(name = "idGenerator", strategy = "uuid")
 	@GeneratedValue(generator = "idGenerator")
-	private int consumptionId;
+	private String consumptionId;
 	@NotNull
 	@Temporal(TemporalType.DATE)
 	private Date consumptionDate; // 消费时间
@@ -34,15 +34,15 @@ public class Consumption {
 	@NotNull
 	private int customerId; // 消费者ID
 	@NotNull
-	private int clothId; // 衣服类型
+	private int type; // 类型
 	@Column(length = 100)
 	private String remark;
 
-	public int getConsumptionId() {
+	public String getConsumptionId() {
 		return consumptionId;
 	}
 
-	public void setConsumptionId(int consumptionId) {
+	public void setConsumptionId(String consumptionId) {
 		this.consumptionId = consumptionId;
 	}
 
@@ -62,12 +62,12 @@ public class Consumption {
 		this.customerId = customerId;
 	}
 
-	public int getClothId() {
-		return clothId;
+	public int getType() {
+		return type;
 	}
 
-	public void setClothId(int clothId) {
-		this.clothId = clothId;
+	public void setType(int type) {
+		this.type = type;
 	}
 
 	public String getRemark() {
@@ -99,20 +99,20 @@ public class Consumption {
 	}
 
 	public Consumption(@NotNull Date consumptionDate, @NotNull Date suggestDate, @NotNull int userId,
-			@NotNull int customerId, @NotNull int clothId, String remark) {
+			@NotNull int customerId, @NotNull int type, String remark) {
 		super();
 		this.consumptionDate = consumptionDate;
 		this.suggestDate = suggestDate;
 		this.userId = userId;
 		this.customerId = customerId;
-		this.clothId = clothId;
+		this.type = type;
 		this.remark = remark;
 	}
 
 	@Override
 	public String toString() {
 		return "Consumption [consumptionId=" + consumptionId + ", consumptionDate=" + consumptionDate + ", suggestDate="
-				+ suggestDate + ", userId=" + userId + ", customerId=" + customerId + ", clothId=" + clothId
+				+ suggestDate + ", userId=" + userId + ", customerId=" + customerId + ", type=" + type
 				+ ", remark=" + remark + "]";
 	}
 

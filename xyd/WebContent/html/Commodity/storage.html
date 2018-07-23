@@ -29,7 +29,7 @@
 	            <th data-field="color">颜色</th>
 	            <th data-field="nums">数量</th>
 	            <th data-field="price">推荐单价(元)</th>
-	            <th data-field="component">备注</th>
+	            <th data-field="remark">备注</th>
 	        </tr>
         </thead>
     </table>
@@ -90,6 +90,25 @@
 					</div>
 			    </div>
 			  </div>
+			 
+			  <div class="row" style="margin-top:5px;">
+			     <textarea class="form-control" id="remark" rows="3" placeholder="订单备注"></textarea>
+			  </div>
+			  
+			  <div class="row" style="margin-top:5px;">
+			    <div class="col-sm-4">
+			      	<label for="discount" class="col-form-label">取货日期</label>
+			    </div>
+			    <div class="col-sm-8">
+			        <select id="pick_up" class="form-control" id="discount">
+			    	  <option value="1">一日后</option>
+				      <option value="2">三日后</option>
+				      <option value="3">五日后</option>
+				      <option value="4">七日后</option>
+				    </select>
+			    </div>
+			  </div>
+			
 			</div>
 	      </div>
 	      <div class="modal-footer">
@@ -127,7 +146,7 @@ function contentOlFromObj(value){
 function contentLiFromList(list){
 	var content = '';
 	$.each(list, function(index, value){
-		content += ' <li class="breadcrumb-item"><a class="add_item" value="'+value.price+'" href="#">'+ value.clothName +'</a></li>';
+		content += ' <li id="'+value.clothId+'" class="breadcrumb-item"><a class="add_item" value="'+value.price+'" href="#">'+ value.clothName +'</a></li>';
 	});
 	return content;
 }
@@ -138,7 +157,7 @@ var total = 0;
 function getTotal(map){
   	
   	$.each(map,function(key){
-  		total += parseFloat(map[key].num) * parseFloat(map[key].price);
+  		total += parseFloat(map[key].nums) * parseFloat(map[key].price);
   	});
   	
 	return total;
@@ -168,14 +187,15 @@ function mapToArray(map){
  */
 var map = new Object(); // or var map = {};
 //传入相关信息，像map中添加一个对象。
-function createNewInstance(rowId, name, color, num, price, component){
+function createNewInstance(rowId, clothId, name, color, nums, price, remark){
 	var rowContent = new Object();
     rowContent.id = rowId;
+    rowContent.clothId = clothId
     rowContent.name = name;
     rowContent.color = color;
-    rowContent.num = num;
+    rowContent.nums = nums;
     rowContent.price = price;
-    rowContent.component = component;
+    rowContent.remark = remark;
     return rowContent;
      
 }
@@ -185,7 +205,7 @@ function mapSet(rowContent){
 function getMapContent(){
 	var content = "";
 	$.each(map, function(i){ 
-		content += '<p>'+map[i].name+"&nbsp;"+map[i].color+"&nbsp;"+map[i].price+" * "+map[i].num+" 备注:"+map[i].component+'</p>'
+		content += '<p>'+map[i].name+"&nbsp;"+map[i].color+"&nbsp;"+map[i].price+" * "+map[i].nums+" 备注:"+map[i].remark+'</p>'
 	});
 	return content;
 }
@@ -211,6 +231,7 @@ $(function () {
 	    var itemName = $(this).html();
 	    var i = 0;
 	    var itemprice = parseFloat($(this).attr("value"));
+	    var clothId = $(this).parent().attr("id");
 	    var text = ' <input type="text" class="form-control name_input" value="'+itemName+'">'
 	    var select = '<select class="form-control color_select">';
 	    	select+= '<option value="1">黑色</option>';
@@ -226,10 +247,11 @@ $(function () {
     		nums+= '<option value="4">4</option>';
     		nums+= '<option value="5">5</option>';
     		nums+= '</select>';
-	    var component = ' <input type="text" class="form-control component_input" placeholder="备注可不填写">';
+	    var remark = ' <input type="text" class="form-control remark_input" placeholder="备注可不填写">';
 	    
+	    console.log(clothId);
 	    //向临时map<String, Object>内增加一个对象
-	    var rowContent = createNewInstance(randomId, itemName, 1, 1, itemprice, "");
+	    var rowContent = createNewInstance(randomId, clothId, itemName, 1, 1, itemprice, "");
 		mapSet(rowContent);
 		
 	    //插入一条新数据，注意此处还有bug，之前的所有数据，都会变成新添加的。
@@ -242,7 +264,7 @@ $(function () {
 	            color: select,
 	            nums: nums,
 	            price: itemprice,
-	            component: component
+	            remark: remark
 	        }
 	    });
 	});
@@ -277,7 +299,9 @@ $(function () {
 		//确认订单后清空临时map和total
 		console.log(map);
 		$.post("http://127.0.0.1:8003/xyd/consumption/order",{
-			"order" : JSON.stringify(mapToArray(map))
+			"order" : JSON.stringify(mapToArray(map)),
+			"suggestDate" : $("#pick_up").val(),
+			"remark" : $("#remark").val()
 		},function(data){
 			console.log(data);
 		});
@@ -304,8 +328,8 @@ $(function () {
 	/* 行内容变更存入临时map相关 */
 	$table.on("change",".num_select",function(){
 		var rowId = $(this).parent().siblings().eq(1).html();
-		var num = $(this).val();
-        map[rowId].num = num;
+		var nums = $(this).val();
+        map[rowId].nums = nums;
     });
 	$table.on("change",".color_select",function(){
 		var rowId = $(this).parent().siblings().eq(1).html();
@@ -317,10 +341,10 @@ $(function () {
 		var itemName = $(this).val();
         map[rowId].name = itemName;
     });
-    $table.on("change",".component_input",function(){
+    $table.on("change",".remark_input",function(){
 		var rowId = $(this).parent().siblings().eq(1).html();
-		var component = $(this).val();
-        map[rowId].component = component;
+		var remark = $(this).val();
+        map[rowId].remark = remark;
     });
 	/* 存入临时map结束 */
 	

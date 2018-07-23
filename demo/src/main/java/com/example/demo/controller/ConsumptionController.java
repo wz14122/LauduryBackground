@@ -16,11 +16,12 @@ public class ConsumptionController {
 
 	@Autowired
 	private ConsumptionService service;
-	
+
 	@PostMapping(value = "/order")
-	public Result order(@RequestParam(value = "order", required = true) String order) {
+	public Result order(@RequestParam(value = "order", required = true) String order,
+			@RequestParam(value = "suggestDate") String suggestDate, @RequestParam(value = "remark") String remark) {
 		System.out.println(order);
-		service.order(order);
+		service.order(order, suggestDate, remark);
 		return ResultUtil.success();
 	}
 }

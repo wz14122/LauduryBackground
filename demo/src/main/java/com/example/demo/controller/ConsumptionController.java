@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -24,4 +25,10 @@ public class ConsumptionController {
 		service.order(order, suggestDate, remark);
 		return ResultUtil.success();
 	}
+	
+	@GetMapping(value = "/order")
+	public Result order() {
+		return ResultUtil.success(service.findAll());
+	}
+	
 }

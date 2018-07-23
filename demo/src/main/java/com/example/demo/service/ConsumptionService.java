@@ -1,5 +1,7 @@
 package com.example.demo.service;
 
+import java.util.List;
+
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,5 +44,9 @@ public class ConsumptionService {
 
 	public Consumption save(Consumption entity) {
 		return dao.save(entity);
+	}
+	
+	public List<Consumption> findAll(){
+		return dao.findAll();
 	}
 }

@@ -6,117 +6,37 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <link rel="stylesheet" href="/xyd/resources/layui/css/layui.css"  media="all">
-  <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
+ <link href="/xyd/css/bootstrap/bootstrap.min.css" rel="stylesheet">
+<link href="/xyd/css/bootstrap/bootstrap-table.css" rel="stylesheet">
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="/xyd/js/bootstrap/bootstrap.min.js"></script>
+<script src="/xyd/js/bootstrap/bootstrap-table.js"></script>
+<script src="/xyd/js/bootstrap/ga.js"></script>
 </head>
 <body>
-
-<div class="layui-btn-group demoTable">
-  <button class="layui-btn" data-type="getCheckData">获取选中行数据</button>
-  <button class="layui-btn" data-type="getCheckLength">获取选中数目</button>
-  <button class="layui-btn" data-type="isAll">验证是否全选</button>
-</div>
-<table class="layui-hide" id="test"></table>
- 
-<script type="text/html" id="switchTpl">
-  <!-- 这里的 checked 的状态只是演示 -->
-  <input type="checkbox" name="sex" value="{{d.id}}" lay-skin="switch" lay-text="女|男" lay-filter="sexDemo" {{ d.id == 10003 ? 'checked' : '' }}>
-</script>
- 
-<script type="text/html" id="checkboxTpl">
-  <!-- 这里的 checked 的状态只是演示 -->
-  <input type="checkbox" name="lock" value="{{d.id}}" title="锁定" lay-filter="lockDemo" {{ d.id == 10006 ? 'checked' : '' }}>
-</script>
-
-          
-<script src="/xyd/resources/layui/layui.js" charset="utf-8"></script>
-<!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 --> 
- 
+    <div class="container">
+        <h1>Client Side Pagination</h1>
+        <p>Use <code>pagination</code>, <code>sidePagination</code>, <code>pageNumber</code>, <code>pageSize</code>, <code>pageList</code> options to set the pagination options.</p>
+        <table id="table"
+               data-toggle="table"
+               data-height="460"
+               data-pagination="true"
+               data-search="true"
+               data-url="json1.json">
+            <thead>
+            <tr>
+                <th data-field="id">ID</th>
+                <th data-field="name">Item Name</th>
+                <th data-field="price">Item Price</th>
+            </tr>
+            </thead>
+        </table>
+    </div>
 <script>
-var colorMap = { '1' : '黑色', '2' : '蓝色', '3' : '绿色', '4' : '红色', '5' : '紫色'};
-var numsMap = {1 : 1,2 : 2, 3 : 3};
-var colorContent = "";
+    var $table = $('#table');
 
-layui.use(['jquery'], function(){
-    var $ = jQuery = layui.$;
-    function getColorContent(colorMap){
-    	colorContent = '<select name="nums" lay-verify="">';
-        $.each(colorMap, function(i) {     
-        	colorContent += '<option value="'+ i +'">'+ colorMap[i] +'</option>' ;
-        });
-        colorContent += '</select>'
-    };
-    getColorContent(colorMap);
-})
-
-layui.use('table', function(){
-  var table = layui.table
-  ,form = layui.form;
-  
-  table.render({
-    elem: '#test'
-    ,url:'json1.json'
-    ,cellMinWidth: 80
-    ,id : 'idTest'
-    ,cols: [[
-      {type:'numbers'}
-      ,{type: 'checkbox'}
-      ,{field:'id', title:'ID', width:100, unresize: true, sort: true}
-      ,{field:'username', title:'用户名', templet: '#usernameTpl'}
-      ,{field:'city', title:'城市'}
-      ,{field:'wealth', title: '财富', minWidth:120, sort: true}
-      ,{field:'sex', title:'性别', width:85, templet: '#switchTpl', unresize: true}
-      ,{field:'lock', title:'是否锁定', width:110, templet: '#checkboxTpl', unresize: true},
-      {
-    	  field:'nums', title:'数量', templet: function(d){
-    		  console.log(colorContent);
-    	      return colorContent;
-          }
-      }
-    ]]
-    ,page: true
-  });
-  
-  //监听性别操作
-  form.on('switch(sexDemo)', function(obj){
-    layer.tips(this.value + ' ' + this.name + '：'+ obj.elem.checked, obj.othis);
-  });
-  
-  //监听锁定操作
-  form.on('checkbox(lockDemo)', function(obj){
-    layer.tips(this.value + ' ' + this.name + '：'+ obj.elem.checked, obj.othis);
-  });
-  
-  //获取数据
-  var $ = layui.$, active = {
-    getCheckData: function(){ //获取选中数据
-      var checkStatus = table.checkStatus('idTest')
-      ,data = checkStatus.data;
-      layer.alert(JSON.stringify(data));
-    }
-    ,getCheckLength: function(){ //获取选中数目
-      var checkStatus = table.checkStatus('idTest')
-      ,data = checkStatus.data;
-      layer.msg('选中了：'+ data.length + ' 个');
-    }
-    ,isAll: function(){ //验证是否全选
-      var checkStatus = table.checkStatus('idTest');
-      layer.msg(checkStatus.isAll ? '全选': '未全选')
-    }
-  };
-  $('.demoTable .layui-btn').on('click', function(){
-    var type = $(this).data('type');
-    active[type] ? active[type].call(this) : '';
-  });
-  
-});
-
-layui.use('form', function(){
-    var form = layui.form; 
-    form.render();
-}); 
-
+    $(function () {
+    });
 </script>
-
-</body>
 </html>

@@ -303,9 +303,16 @@ $(function () {
 			"suggestDate" : $("#pick_up").val(),
 			"remark" : $("#remark").val()
 		},function(data){
+			if(data.code==200){
+				if(data.msg=="OK"){
+					map = new Object(); //清空map
+					$("#dismiss").click(); //關閉彈框
+					//跳轉到訂單頁面。或者選擇再添加一个订单
+					// TODO
+				}
+			}
 			console.log(data);
 		});
-		//map = new Object();
 	});
 	//关闭订单
 	$("#close").click(function(){

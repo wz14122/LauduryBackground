@@ -29,6 +29,8 @@ public class Consumption {
 	@NotNull
 	@Temporal(TemporalType.DATE)
 	private Date suggestDate; // 建議取貨時間
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date fetchDate;  // 订单完成时间
 	@NotNull
 	private int userId; // 处置人
 	@NotNull
@@ -37,6 +39,7 @@ public class Consumption {
 	private int type; // 类型
 	@Column(length = 100)
 	private String remark;
+	private int state;
 
 	public String getConsumptionId() {
 		return consumptionId;
@@ -94,12 +97,28 @@ public class Consumption {
 		this.suggestDate = suggestDate;
 	}
 
+	public int getState() {
+		return state;
+	}
+
+	public void setState(int state) {
+		this.state = state;
+	}
+	
 	public Consumption() {
 		super();
 	}
+	
+	public Date getFetchDate() {
+		return fetchDate;
+	}
+
+	public void setFetchDate(Date fetchDate) {
+		this.fetchDate = fetchDate;
+	}
 
 	public Consumption(@NotNull Date consumptionDate, @NotNull Date suggestDate, @NotNull int userId,
-			@NotNull int customerId, @NotNull int type, String remark) {
+			@NotNull int customerId, @NotNull int type, String remark, int state) {
 		super();
 		this.consumptionDate = consumptionDate;
 		this.suggestDate = suggestDate;
@@ -107,13 +126,14 @@ public class Consumption {
 		this.customerId = customerId;
 		this.type = type;
 		this.remark = remark;
+		this.state = state;
 	}
 
 	@Override
 	public String toString() {
 		return "Consumption [consumptionId=" + consumptionId + ", consumptionDate=" + consumptionDate + ", suggestDate="
-				+ suggestDate + ", userId=" + userId + ", customerId=" + customerId + ", type=" + type
-				+ ", remark=" + remark + "]";
+				+ suggestDate + ", fetchDate=" + fetchDate + ", userId=" + userId + ", customerId=" + customerId
+				+ ", type=" + type + ", remark=" + remark + ", state=" + state + "]";
 	}
 
 }

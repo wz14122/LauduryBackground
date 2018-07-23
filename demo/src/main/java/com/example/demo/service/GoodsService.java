@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.example.demo.dao.GoodsDao;
 import com.example.demo.entity.Consumption;
 import com.example.demo.entity.Goods;
+import com.example.demo.utils.BatchUtil;
 import com.example.demo.utils.DateUtil;
 
 import net.sf.json.JSONArray;
@@ -19,9 +20,12 @@ public class GoodsService {
 
 	@Autowired
 	private GoodsDao dao;
+	
+	@Autowired
+	private BatchUtil<Goods> batchUtil;
 
 	public List<Goods> saveAll(List<Goods> list) {
-		return dao.savAll(list);
+		return dao.saveAll(list);
 	}
 
 	public List<Goods> saveAllFromJSONArray(String jsonArray, Consumption consumption) {
@@ -39,5 +43,27 @@ public class GoodsService {
 			entity.add(good);
 		}
 		return this.saveAll(entity);
+	}
+	
+	public List<Goods> findByConsumptionId(String consumptionId){
+		return dao.findByConsumptionId(consumptionId);
+	}
+	
+	public List<Goods> findByFetchState(boolean state){
+		return dao.findByHaveFetch(state);
+	}
+	
+	public void updateGoodsState(String goods) {
+		JSONArray ja = JSONArray.fromObject(goods);
+		ArrayList<Goods> list = new ArrayList<>();
+		for (Object object : ja) {
+			JSONObject jsonObject2 = JSONObject.fromObject(object);
+			Goods good = (Goods) JSONObject.toBean(jsonObject2, Goods.class);
+			good.setHaveFetch(true);
+			good.setFetchDate(DateUtil.getToday());
+			list.add(good);
+		}
+		System.out.println(list);
+		batchUtil.batchUpdate(list);
 	}
 }

@@ -18,7 +18,15 @@ public class GoodsDao {
 		return repository.save(entity);
 	}
 
-	public List<Goods> savAll(List<Goods> entities) {
+	public List<Goods> saveAll(List<Goods> entities) {
 		return repository.saveAll(entities);
+	}
+
+	public List<Goods> findByConsumptionId(String consumptionId) {
+		return repository.findByConsumptionId(consumptionId);
+	}
+
+	public List<Goods> findByHaveFetch(boolean state) {
+		return repository.findByHaveFetch(state);
 	}
 }

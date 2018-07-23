@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link href="/xyd/css/bootstrap/bootstrap.min.css" rel="stylesheet">
+<link href="/xyd/css/bootstrap/bootstrap-table.css" rel="stylesheet">
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script>window.jQuery || document.write('<script src="/xyd/js/bootstrap/jquery-slim.min.js"><\/script>')</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script src="/xyd/js/bootstrap/bootstrap-table.js"></script>
+<script src="/xyd/js/bootstrap/ga.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>订单详情</h1>
+        <table id="table">
+        </table>
+    </div>
+    
+    <!-- Modal -->
+    <button id="showModal" type="button" data-toggle="modal" data-target="#gridSystemModal" style="display: none">
+	</button>
+    <!-- <div class="modal-body" id="modal"> -->
+    
+    <div id="gridSystemModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="gridModalLabel" aria-hidden="true" style="display: none;">
+	  <div class="modal-dialog" role="document" style="max-width: 900px !important;">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title" id="gridModalLabel">Grids in modals</h5>
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+	      </div>
+	      <div class="modal-body">
+	        <div class="container-fluid bd-example-row">
+	          <table class="table">
+				  <thead>
+				    <tr>
+				      <th scope="col">商品名称</th>
+				      <th scope="col">单价</th>
+				      <th scope="col">数量</th>
+				      <th scope="col">已取走</th>
+				      <th scope="col">备注</th>
+				      <th scope="col">操作</th>
+				    </tr>
+				  </thead>
+				  <tbody id="content">
+				    <tr>
+				      <th scope="row">1</th>
+				      <td>Mark</td>
+				      <td>Otto</td>
+				      <td>@mdo</td>
+				    </tr>
+				  </tbody>
+				</table>
+	        </div>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+	        <button type="button" class="btn btn-primary">Save changes</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+    
+    
+    
+	
+    
+<script>
+    var $table = $('#table');
+    var type = {1 : "清洗", 2 : "修理", 3 : "制作"};
+    
+    function InitMainTable () {
+        //记录页面bootstrap-table全局变量$table，方便应用
+        var queryUrl = 'http://127.0.0.1:8003/xyd/consumption/order'
+        $table = $('#table').bootstrapTable({
+            url: queryUrl,                      //请求后台的URL（*）
+            method: 'GET',                      //请求方式（*）
+            pagination: 'true',                   //是否显示分页（*）
+            striped: true,                      //是否显示行间隔色
+            cache: false,                       //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
+            sortable: true,                     //是否启用排序
+            search: true,                      //是否显示表格搜索
+            //得到查询的参数
+            columns: [ {
+                field: 'consumptionId',
+                title: '姓名',
+                sortable: true,
+                align : 'center'
+            }, {
+                field: 'suggestDate',
+                title: '建议取货日期',
+                sortable: true,
+                align : 'center'
+            }, {
+                field: 'consumptionDate',
+                title: '消费日期',
+                sortable: true,
+                align : 'center',
+                formatter: emailFormatter
+            }, {
+                field: 'type',
+                title: '类型',
+                align: 'center',
+                formatter: typeFormatter
+            }, {
+                field: 'fetchDate',
+                title: '实际取货日期',
+                sortable: true,
+                align : 'center',
+                formatter: fetchDateFormatter
+            }, {
+                field: 'remark',
+                title: '备注',
+                align: 'center'
+            }, {
+                field:'consumptionId',
+                title: '操作',
+                width: 250,
+                align: 'center',
+                valign: 'middle',
+                formatter: actionFormatter
+            }, ],
+            onLoadSuccess: function () {
+            },
+            onLoadError: function () {
+                showTips("数据加载失败！");
+            },
+            onDblClickRow: function (row, $element) {
+                var id = row.ID;
+                EditViewById(id, 'view');
+            },
+        });
+    };
+  //连接字段格式化
+    function typeFormatter(value, row, index) {            
+	  var content = '<label>'+type[value]+'</label>';
+      return content;
+    }
+    //Email字段格式化
+    function emailFormatter(value, row, index) {
+        return "<a href='mailto:" + value + "' title='单击打开连接'>" + value + "</a>";
+    }
+    //性别字段格式化
+    function sexFormatter(value) {
+        if (value == "女") { color = 'Red'; }
+        else if (value == "男") { color = 'Green'; }
+        else { color = 'Yellow'; }
+
+        return '<div  style="color: ' + color + '">' + value + '</div>';
+    }
+    //操作栏的格式化
+    function actionFormatter(value, row, index) {
+        var id = value;
+        var result = "";
+        result += "<button class='details btn btn-info btn-sm'>详细</button>&nbsp;";
+        result += "<button class='all btn btn-danger btn-sm'>取走全部</button>&nbsp;";
+        return result;
+    }
+	function dateFormatter (value, row, index){
+		return null;
+	}
+	function details(index, row) {
+	    var html = [];
+	    $.each(row, function (key, value) {
+	        html.push('<p><b>' + key + ':</b> ' + value + '</p>');
+     	});
+     return html.join('');
+	}
+	function fetchDateFormatter(value, row, index){
+		if(value!=null){
+			return '需要格式化取货时间';
+		}else{
+			return '未取';
+		}
+	}
+	//结束
+	
+	//内容标记
+	function goodContent(data){
+		var content = "";
+		
+		$.each(data, function(index, value){
+			content += '<tr>';
+			content += '<td>'+value.name+'</td>';
+			content += '<td>'+value.price+'</td>';
+			content += '<td>'+value.num+'</td>';
+			if(value.haveFetch){
+				content += '<td><lable style="color:green;">已取</label></td>';
+			}else{
+				content += '<td><lable style="color:red;">未取</label></td>';
+			}
+			content += '<td>'+value.remark+'</td>';
+			content += '<td><button class="btn btn-info btn-sm">取货</button></td>';
+			content += '</tr>'
+		});
+		
+		return content;
+	}
+	
+    
+    $(function () {
+    	InitMainTable();
+    	
+    	$("#table").on("click", ".details", function(){
+    		
+    		var $good = $("#content"); 
+    		$good.empty();
+			var id = $(this).parent().siblings(":eq(0)").html();
+    		var url = "http://127.0.0.1:8003/xyd/gc/goods/"+id;
+    		$.get(url, function(data){
+    			
+    			if(data.code==200){
+	    			console.log(data);
+	    			var content = goodContent(data.data);
+	    			$good.append(content);
+	    			$("#showModal").click();
+    			}else{
+    				;
+    			}
+
+    		});
+    		
+    	})
+    });
+</script>
+</body>
+</html>

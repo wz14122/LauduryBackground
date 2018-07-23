@@ -32,11 +32,10 @@ public class Goods implements Cloneable {
 	private int customerId; // 消费者ID
 	@NotNull
 	private boolean haveFetch; // 是否已经取走，可能存在多种货物，不会同时取走的情况
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date fetchDate;
 	@Temporal(TemporalType.DATE) // 实际取货日期
 	private Date expectFetchDate; // 预计取货日期
-
 	@Temporal(TemporalType.DATE)
 	private Date consumptionDate; // 消费日期
 	private String name;

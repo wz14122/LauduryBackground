@@ -1,6 +1,9 @@
 package com.example.demo.dao;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,5 +31,10 @@ public class GoodsDao {
 
 	public List<Goods> findByHaveFetch(boolean state) {
 		return repository.findByHaveFetch(state);
+	}
+	
+	@Transactional
+	public void updateGoodsStateByIds(ArrayList<Integer> ids) {
+		repository.updateGoodsStateByIds(ids);
 	}
 }

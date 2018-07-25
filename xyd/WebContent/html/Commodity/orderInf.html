@@ -20,15 +20,15 @@
     </div>
     
     <!-- Modal -->
-    <button id="showModal" type="button" data-toggle="modal" data-target="#gridSystemModal" style="display: none">
+    <button id="showModal" type="button" data-toggle="modal" data-target="#detailModal" style="display: none">
 	</button>
     <!-- <div class="modal-body" id="modal"> -->
     
-    <div id="gridSystemModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="gridModalLabel" aria-hidden="true" style="display: none;">
+    <div id="detailModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="gridModalLabel" aria-hidden="true" style="display: none;">
 	  <div class="modal-dialog" role="document" style="max-width: 900px !important;">
 	    <div class="modal-content">
 	      <div class="modal-header">
-	        <h5 class="modal-title" id="gridModalLabel">Grids in modals</h5>
+	        <h5 class="modal-title" id="detailModalHeader"></h5>
 	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
 	      </div>
 	      <div class="modal-body">
@@ -39,8 +39,8 @@
 				      <th scope="col">商品名称</th>
 				      <th scope="col">单价</th>
 				      <th scope="col">数量</th>
-				      <th scope="col">已取走</th>
 				      <th scope="col">备注</th>
+				      <th scope="col">已取走</th>
 				      <th scope="col">操作</th>
 				    </tr>
 				  </thead>
@@ -56,21 +56,18 @@
 	        </div>
 	      </div>
 	      <div class="modal-footer">
-	        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-	        <button type="button" class="btn btn-primary">Save changes</button>
+	        <button id="close" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+	        <button id="save_change" type="button" class="btn btn-primary">保存</button>
 	      </div>
 	    </div>
 	  </div>
 	</div>
-    
-    
-    
 	
     
 <script>
-    var $table = $('#table');
+	/* 数据加载部分 */
+	var $table = $('#table');
     var type = {1 : "清洗", 2 : "修理", 3 : "制作"};
-    
     function InitMainTable () {
         //记录页面bootstrap-table全局变量$table，方便应用
         var queryUrl = 'http://127.0.0.1:8003/xyd/consumption/order'
@@ -85,7 +82,13 @@
             //得到查询的参数
             columns: [ {
                 field: 'consumptionId',
-                title: '姓名',
+                title: '订单号',
+                sortable: true,
+                align : 'center',
+                formatter: consumptionFormatter
+            },{
+                field: 'userId',
+                title: '客户',
                 sortable: true,
                 align : 'center'
             }, {
@@ -113,9 +116,10 @@
             }, {
                 field: 'remark',
                 title: '备注',
+                width: 200,
                 align: 'center'
             }, {
-                field:'consumptionId',
+                //field:'consumptionId',
                 title: '操作',
                 width: 250,
                 align: 'center',
@@ -148,14 +152,14 @@
         else if (value == "男") { color = 'Green'; }
         else { color = 'Yellow'; }
 
-        return '<div  style="color: ' + color + '">' + value + '</div>';
+        return '<div style="color: ' + color + '">' + value + '</div>';
     }
     //操作栏的格式化
     function actionFormatter(value, row, index) {
         var id = value;
         var result = "";
         result += "<button class='details btn btn-info btn-sm'>详细</button>&nbsp;";
-        result += "<button class='all btn btn-danger btn-sm'>取走全部</button>&nbsp;";
+        result += "<button class='fetchAll btn btn-danger btn-sm'>取走全部</button>&nbsp;";
         return result;
     }
 	function dateFormatter (value, row, index){
@@ -175,7 +179,12 @@
 			return '未取';
 		}
 	}
-	//结束
+	//格式化订单号
+	function consumptionFormatter(value, row, index){
+		var content = '<label style="display:none">'+value+'</label>'+(index+1);
+		return content;
+	}
+	/* 数据加载部分结束 */
 	
 	//内容标记
 	function goodContent(data){
@@ -183,46 +192,107 @@
 		
 		$.each(data, function(index, value){
 			content += '<tr>';
+			content += '<td style="display:none">'+value.consumptionId+'</td>'
+			content += '<td style="display:none">'+value.goodsId+'</td>'
 			content += '<td>'+value.name+'</td>';
 			content += '<td>'+value.price+'</td>';
-			content += '<td>'+value.num+'</td>';
+			content += '<td>'+value.nums+'</td>';
+			content += '<td>'+value.remark+'</td>';
 			if(value.haveFetch){
 				content += '<td><lable style="color:green;">已取</label></td>';
+				content += '<td><button class="fetchThe btn btn-secondary btn-sm">已取货</button></td>';
 			}else{
 				content += '<td><lable style="color:red;">未取</label></td>';
+				content += '<td><button class="fetchThe btn btn-info btn-sm">取货</button></td>';
 			}
-			content += '<td>'+value.remark+'</td>';
-			content += '<td><button class="btn btn-info btn-sm">取货</button></td>';
 			content += '</tr>'
 		});
-		
 		return content;
 	}
 	
+	/* 部分更新所需要的map，点击确认取货后清空 */
+    var fetchMap = new Object();
+    function mapToArray(map){
+    	var list = new Array();
+    	$.each(map,function(i){
+    		list.push(i);
+    	});
+    	return list;
+    }
+    /* 结束 */
     
     $(function () {
+    	//初始化表格数据
     	InitMainTable();
     	
+    	/* table表格内点击事件 */
     	$("#table").on("click", ".details", function(){
-    		
     		var $good = $("#content"); 
+    		var $header = $("#detailModalHeader");
     		$good.empty();
-			var id = $(this).parent().siblings(":eq(0)").html();
+    		$header.empty();
+			var id = $(this).parent().siblings(":eq(0)").children("label").html();
+			var user = $(this).parent().siblings(":eq(1)").html();
+			var consumptionDate = $(this).parent().siblings(":eq(3)").html();
     		var url = "http://127.0.0.1:8003/xyd/gc/goods/"+id;
     		$.get(url, function(data){
-    			
     			if(data.code==200){
 	    			console.log(data);
-	    			var content = goodContent(data.data);
-	    			$good.append(content);
+	    			$header.html("用户:"+user+" &nbsp; 消费日期:"+consumptionDate);
+	    			$good.append(goodContent(data.data));
 	    			$("#showModal").click();
     			}else{
     				;
     			}
 
     		});
-    		
+    	});
+    	
+    	$("#table").on("click",".fetchAll",function(){
+    		alert("未开发");
     	})
+    	/* 结束 */
+    	
+    	/* 订单详细 */
+    	$("#detailModal").on("click", ".fetchThe", function(){
+    		$button = $(this);
+    		var goodsId = $button.parent().siblings(":eq(1)").html();
+			var consumptionId = $button.parent().siblings(":eq(0)").html()
+
+			if($button.html()=="取货"){
+				fetchMap[goodsId] = consumptionId; 
+	    		$button.removeClass("btn-info");
+	    		$button.addClass("btn-secondary");
+				$button.html("已取货");	
+			}else{
+				fetchMap[goodsId] = null; 
+	    		$button.removeClass("btn-secondary");
+	    		$button.addClass("btn-info");
+				$button.html("取货");
+			}
+    	});
+    	$("#save_change").click(function(){
+    		if(confirm('再次确认处于"已取货"操作的货物，已交到客户手上！！！确定后不可修改')){
+    			
+    			var url = "http://127.0.0.1:8003/xyd/gc/goods";
+    			
+    			$.post(url,{
+    				goods : JSON.stringify(mapToArray(fetchMap))
+    			}, function(data){
+    				if(data.code == 200){
+	    				$("#close").click();
+	    				//清空map
+	    				fetchMap = new Object();
+    				}
+    				console.log(data);
+    			});
+    			
+    		}else{
+    			
+    		}
+    	});
+    	
+    	/* 订单详细结束 */
     });
 </script>
 </body>

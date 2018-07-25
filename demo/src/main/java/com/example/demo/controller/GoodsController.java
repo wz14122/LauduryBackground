@@ -3,7 +3,7 @@ package com.example.demo.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,7 +25,7 @@ public class GoodsController {
 		return ResultUtil.success(gs.findByConsumptionId(id));
 	}
 	
-	@PutMapping(value = "/goods")
+	@PostMapping(value = "/goods")
 	public Result updateGoodsState(@RequestParam(value = "goods", required = true) String goods) {
 		gs.updateGoodsState(goods);
 		return ResultUtil.success();

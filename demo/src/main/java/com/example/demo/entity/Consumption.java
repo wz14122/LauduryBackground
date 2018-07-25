@@ -32,7 +32,7 @@ public class Consumption {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date fetchDate;  // 订单完成时间
 	@NotNull
-	private int userId; // 处置人
+	private String userId; // 处置人
 	@NotNull
 	private int customerId; // 消费者ID
 	@NotNull
@@ -49,13 +49,6 @@ public class Consumption {
 		this.consumptionId = consumptionId;
 	}
 
-	public int getUserId() {
-		return userId;
-	}
-
-	public void setUserId(int userId) {
-		this.userId = userId;
-	}
 
 	public int getCustomerId() {
 		return customerId;
@@ -117,7 +110,15 @@ public class Consumption {
 		this.fetchDate = fetchDate;
 	}
 
-	public Consumption(@NotNull Date consumptionDate, @NotNull Date suggestDate, @NotNull int userId,
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
+
+	public Consumption(@NotNull Date consumptionDate, @NotNull Date suggestDate, @NotNull String userId,
 			@NotNull int customerId, @NotNull int type, String remark, int state) {
 		super();
 		this.consumptionDate = consumptionDate;

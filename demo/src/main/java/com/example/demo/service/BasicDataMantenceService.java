@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.demo.entity.Cloth;
 import com.example.demo.entity.ClothType;
+import com.example.demo.entity.Color;
 import com.example.demo.moudle.MyException;
 import com.example.demo.moudle.ResultEnum;
 
@@ -22,6 +23,9 @@ public class BasicDataMantenceService {
 
 	@Autowired
 	private ClothTypeService ctService;
+	
+	@Autowired
+	private ColorService colorService;
 
 	/**
 	 * @return hashmap所有清洗类型，及其孩子项。注意，不是二级目录结构！
@@ -40,5 +44,13 @@ public class BasicDataMantenceService {
 		}
 		return clothMsgMap;
 	}
-
+	
+	public List<Color> allColor() {
+		return colorService.findAll();
+	}
+	
+	public Color addColor(String color) {
+		return colorService.save(color);
+	}
+	
 }

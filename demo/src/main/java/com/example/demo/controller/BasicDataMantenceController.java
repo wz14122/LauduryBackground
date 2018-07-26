@@ -2,7 +2,9 @@ package com.example.demo.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.moudle.Result;
@@ -23,6 +25,16 @@ public class BasicDataMantenceController {
 	@GetMapping(value = "/allClothMsg")
 	public Result allClothMsg() {
 		return ResultUtil.success(service.allClothMsg());
+	}
+	
+	@GetMapping(value = "/colors")
+	public Result allColors() {
+		return ResultUtil.success(service.allColor());
+	}
+	
+	@PostMapping(value = "/color")
+	public Result addColor(@RequestParam(value = "colorName", required = true) String colorName) {
+		return ResultUtil.success(service.addColor(colorName));
 	}
 	
 }

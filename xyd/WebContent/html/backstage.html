@@ -101,9 +101,9 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">
+                <a id="color_manage" class="nav-link" href="#">
                   <span data-feather="file-text"></span>
-                  Year-end sale
+                  	系统维护
                 </a>
               </li>
               <li class="nav-item">
@@ -165,6 +165,11 @@
 	    		$(".nav-item a").removeClass("active");
 	    		$("#order_inf").addClass("active");
 	    		$("#mainiframe").attr("src","/xyd/html/Commodity/orderInf.html");
+	    	});
+	    	$("#color_manage").click(function(){
+	    		$(".nav-item a").removeClass("active");
+	    		$("#color_manage").addClass("active");
+	    		$("#mainiframe").attr("src","/xyd/html/maintenance/utilsMaintence.html");
 	    	});
 	    });
     </script>

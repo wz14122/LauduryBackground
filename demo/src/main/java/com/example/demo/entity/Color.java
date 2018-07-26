@@ -7,7 +7,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotBlank;
 
 /**
  * @author wz 颜色控制
@@ -19,7 +19,7 @@ public class Color {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer colorId; // id自动生成就是，没什么大问题
-	@NotNull
+	@NotBlank
 	@Column(length = 20)
 	private String type; // 红色 绿色 蓝色
 
@@ -43,7 +43,7 @@ public class Color {
 		super();
 	}
 
-	public Color(@NotNull String type) {
+	public Color(@NotBlank String type) {
 		super();
 		this.type = type;
 	}

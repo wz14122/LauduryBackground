@@ -14,17 +14,16 @@ public class ColorService {
 
 	@Autowired
 	private ColorDao dao;
-	
-	public List<Color> findAll(){
+
+	public List<Color> findAll() {
 		return dao.findAll();
 	}
-	
+
 	public Color save(String colorName) {
 		String type = colorName.trim();
-		System.out.println(type);
 		Optional<Color> exist = dao.findByType(type);
 		Color color = new Color(type);
-		return exist.orElse(dao.save(color));
+		return exist.orElseGet(() -> dao.save(color));
 	}
 	
 }

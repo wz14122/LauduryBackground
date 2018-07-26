@@ -21,4 +21,8 @@ public class ClothService {
 	public List<Cloth> findByClothTypeCode(int clothTypeId){
 		return dao.findByClothTypeCode(clothTypeId);
 	}
+	
+	public Cloth save(Cloth entity) {
+		return dao.save(entity);
+	}
 }

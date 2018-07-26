@@ -21,4 +21,8 @@ public class ClothDao {
 	public List<Cloth> findByClothTypeCode(int clothTypeId) {
 		return repository.findByClothTypeCode(clothTypeId);
 	}
+	
+	public Cloth save(Cloth entity) {
+		return repository.save(entity);
+	}
 }

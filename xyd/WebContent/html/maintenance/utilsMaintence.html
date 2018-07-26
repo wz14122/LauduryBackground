@@ -45,6 +45,152 @@ body{
 				</div>
 			</div>
 		</div>
+<<<<<<< HEAD
+		
+	</div>
+
+	<!-- modal -->
+	<div id="colorModal" class="modal" tabindex="-1" role="dialog">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title">添加顏色</h5>
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      </div>
+	      <div class="modal-body">
+	        <label for="colorName">颜色名称：</label>
+    		<input type="text" class="form-control" id="colorName">
+	      </div>
+	      <div class="modal-footer">
+	        <button id="color_dismiss" type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+	        <button id="color_add" type="button" class="btn btn-primary">确认添加</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	
+	<div id="typeModal" class="modal" tabindex="-1" role="dialog">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title">添加类型</h5>
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      </div>
+	      <div class="modal-body">
+	        <label for="colorName">类型名称：</label>
+    		<input type="text" class="form-control" id="typeName">
+	      </div>
+	      <div class="modal-footer">
+	        <button id="type_dismiss" type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+	        <button id="type_add" type="button" class="btn btn-primary">确认添加</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	
+	
+	
+	
+	
+	
+
+<script type="text/javascript">
+	function colorContent(data){
+		var content = "已存在顏色：";
+		$.each(data,function(key){
+			content += '<lable>' + data[key].type + '</label>&nbsp;';
+		});
+		return content;
+	}
+	function itemsContent(data, clothTypeCode){
+		var content = '';
+		var clothType = data[clothTypeCode];
+		$.each(clothType,function(value){
+			content += '<label>' + clothType[value].clothName + '</lable>&nbsp;';
+		});
+		return content;
+	}
+	function typeContent(data){
+		var content = "";
+		var clothType = data.ClothType;
+		var flag = 1;
+		
+		$.each(clothType, function(value){
+			
+			if(flag%2==1){
+				content += '<div class="row" style="margin-top:10px;">';
+			}
+			content += '<div class="col-sm-6">';
+			content += 	 '<div class="card">';
+			content += 	   '<div class="card-body">';
+			content += 		 '<h5 id="'+clothType[value].clothTypeId+'" class="card-title">'+clothType[value].clothTypeName+'类型管理</h5>';
+			content += 		 '<p class="card-text">'+itemsContent(data, clothType[value].clothTypeCode)+'</p>';
+			content +=		 '<button class="type_add btn btn-primary" data-toggle="modal" data-target="#typeModal">添加类型</button>'
+			content +=	   '</div>';
+			content +=	 '</div>'
+			content += '</div>';
+			if(flag%2==0){
+				content += '</div>';
+			}
+			flag++;
+		});
+		return content;
+	}
+
+	$(function(){
+		var colorUrl = "http://127.0.0.1:8003/xyd/bdm/colors";
+		var typeUrl = "http://127.0.0.1:8003/xyd/bdm/allClothMsg";
+		//获取颜色
+		$.get(colorUrl, function(data){
+			if(data.code == 200){
+				$("#color_p").html(colorContent(data.data));
+			}
+		});
+		//获取服装类型后分配
+		$.get(typeUrl, function(data){
+			var content = typeContent(data.data);
+			$("#content").append(content);
+		});
+		
+		/* 按钮事件 */
+		$("#addType_a").click(function(){
+			alert("未开放");
+		});
+		$("#color_add").click(function(){
+			$.post("http://127.0.0.1:8003/xyd/bdm/color",{
+				type : $("#colorName").val()
+			},function(data){
+				if(data.code == 200){
+					$("#color_dismiss").click();
+					window.location.reload();
+				}else{
+					alert(data.msg);
+				}
+			});
+		});
+		var type;
+		$("#content").on("click",".type_add",function(){
+			type = $(this).siblings(":eq(0)").attr("id");			
+		});
+		$("#type_add").click(function(){
+			
+			console.log(type);
+			$.post("http://127.0.0.1:8003/xyd/bdm/cloth",{
+				type : type,
+				name : $("#typeName").val()
+			},function(data){
+				if(data.code == 200){
+					$("#type_dismiss").click();
+					window.location.reload();
+				}else{
+					alert(data.msg);
+				}
+			});
+=======
 		<div class="row" style="margin-top:10px;">
 			<div class="col-sm-6">
 				<div class="card">
@@ -169,6 +315,7 @@ body{
 					alert(data.msg);
 				}
 			})
+>>>>>>> branch 'master' of https://github.com/wz14122/LauduryBackground.git
 		});
 		
 	});

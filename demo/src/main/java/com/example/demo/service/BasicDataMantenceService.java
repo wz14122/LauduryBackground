@@ -52,5 +52,10 @@ public class BasicDataMantenceService {
 	public Color addColor(String color) {
 		return colorService.save(color);
 	}
+
+	public Cloth addCloth(Cloth cloth) {
+		
+		return cService.save(cloth);
+	}
 	
 }

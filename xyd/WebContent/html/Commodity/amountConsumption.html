@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>消费信息查询</title>
+<link href="/xyd/css/bootstrap/bootstrap.min.css" rel="stylesheet">
+<link href="/xyd/css/bootstrap/bootstrap-table.css" rel="stylesheet">
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script>window.jQuery || document.write('<script src="/xyd/js/bootstrap/jquery-slim.min.js"><\/script>')</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script src="/xyd/js/bootstrap/bootstrap-table.js"></script>
+<script src="/xyd/js/bootstrap/ga.js"></script>
+<style type="text/css">
+body{
+	margin: 5px 0;
+}
+</style>
+</head>
+<body>
+	<div class="container">
+        <h1>消费信息查询</h1>
+        
+        <div>
+		  <div class="form-row">
+		    <div class="form-group col-md-6">
+		      <label for="username">姓名</label>
+		      <input type="text" class="form-control" id="username" placeholder="姓名">
+		    </div>
+		    <div class="form-group col-md-6">
+		      <label for="order_date">时间</label>
+		      <input type="date" class="form-control" id="order_date">
+		    </div>
+		  </div>
+		  <button id="query" type="submit" class="btn btn-primary">查询</button>
+        </div>
+        
+        <table class="table table-hover">
+		  <thead class="thead-light">
+		    <tr>
+		      <th scope="col">#</th>
+		      <th scope="col">First</th>
+		      <th scope="col">Last</th>
+		      <th scope="col">Handle</th>
+		    </tr>
+		  </thead>
+		  <tbody>
+		    <tr>
+		      <th scope="row">1</th>
+		      <td>Mark</td>
+		      <td>Otto</td>
+		      <td>@mdo</td>
+		    </tr>
+		    <tr>
+		      <th scope="row">2</th>
+		      <td>Jacob</td>
+		      <td>Thornton</td>
+		      <td>@fat</td>
+		    </tr>
+		    <tr>
+		      <th scope="row">3</th>
+		      <td>Larry</td>
+		      <td>the Bird</td>
+		      <td>@twitter</td>
+		    </tr>
+		  </tbody>
+		</table>
+    </div>
+    <script type="text/javascript">
+    	$(function(){
+    		
+    		/* var url = "http://127.0.0.1:8003/xyd/consumption/orderWithOptions"
+    		$.get(url, {
+    			"username" : $("#username").val(),
+    			"order_date" : $("#order_date").val()
+    		},function(data){
+    			
+    		}); */
+    		
+    		$("#query").click(function(){
+    			var username = $("#username").val();
+    			var order_date = $("#order_date").val();
+    			console.log(username);
+    			console.log(order_date);
+    		});
+    	});
+    </script>
+</body>
+</html>

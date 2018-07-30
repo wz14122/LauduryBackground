@@ -53,8 +53,8 @@ public class BasicDataMantenceService {
 		return colorService.save(color);
 	}
 
-	public Cloth addCloth(Cloth cloth) {
-		
+	public Cloth addCloth(int type,String name,double price) {
+		Cloth cloth = new Cloth(type, name, price);
 		return cService.save(cloth);
 	}
 	

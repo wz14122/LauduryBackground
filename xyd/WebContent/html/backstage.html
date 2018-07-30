@@ -95,9 +95,9 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">
+                <a id="amount_consumption" class="nav-link" href="#">
                   <span data-feather="file-text"></span>
-                  Social engagement
+                  	消费金额
                 </a>
               </li>
               <li class="nav-item">
@@ -165,6 +165,11 @@
 	    		$(".nav-item a").removeClass("active");
 	    		$("#order_inf").addClass("active");
 	    		$("#mainiframe").attr("src","/xyd/html/Commodity/orderInf.html");
+	    	});
+	    	$("#amount_consumption").click(function(){
+	    		$(".nav-item a").removeClass("active");
+	    		$("#amount_consumption").addClass("active");
+	    		$("#mainiframe").attr("src","/xyd/html/Commodity/amountConsumption.html");
 	    	});
 	    	$("#color_manage").click(function(){
 	    		$(".nav-item a").removeClass("active");

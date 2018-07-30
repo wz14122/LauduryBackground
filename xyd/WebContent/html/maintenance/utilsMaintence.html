@@ -45,7 +45,6 @@ body{
 				</div>
 			</div>
 		</div>
-<<<<<<< HEAD
 		
 	</div>
 
@@ -190,132 +189,7 @@ body{
 					alert(data.msg);
 				}
 			});
-=======
-		<div class="row" style="margin-top:10px;">
-			<div class="col-sm-6">
-				<div class="card">
-					<div class="card-body">
-						<h5 class="card-title">裤子类型管理</h5>
-						<p id="pantType_p" class="card-text">With supporting text below as a natural
-							lead-in to additional content.</p>
-						<a id="pantType_a" href="#" class="btn btn-primary">添加类型</a>
-					</div>
-				</div>
-			</div>
-			<div class="col-sm-6">
-				<div class="card">
-					<div class="card-body">
-						<h5 class="card-title">鞋子类型管理</h5>
-						<p id="shoeType_p" class="card-text">With supporting text below as a natural
-							lead-in to additional content.</p>
-						<a id="shoeType_a" href="#" class="btn btn-primary">添加类型</a>
-					</div>
-				</div>
-			</div>
-		</div>
-		
-		<div class="row" style="margin-top:10px;">
-			<div class="col-sm-6">
-				<div class="card">
-					<div class="card-body">
-						<h5 class="card-title">其他类型管理</h5>
-						<p id="otherType_p" class="card-text">With supporting text below as a natural
-							lead-in to additional content.</p>
-						<a id="otherType_a" href="#" class="btn btn-primary">添加类型</a>
-					</div>
-				</div>
-			</div>
-			<div class="col-sm-6">
-				<div class="card">
-					<div class="card-body">
-						<h5 class="card-title">新增类型</h5>
-						<p id="addType_p" class="card-text">With supporting text below as a natural
-							lead-in to additional content.</p>
-						<a id="addType_a" href="#" class="btn btn-primary">Go somewhere</a>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
 
-	<!-- modal -->
-	<div id="colorModal" class="modal" tabindex="-1" role="dialog">
-	  <div class="modal-dialog" role="document">
-	    <div class="modal-content">
-	      <div class="modal-header">
-	        <h5 class="modal-title">添加顏色</h5>
-	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-	          <span aria-hidden="true">&times;</span>
-	        </button>
-	      </div>
-	      <div class="modal-body">
-	        <label for="colorName">颜色名称：</label>
-    		<input type="text" class="form-control" id="colorName" placeholder="粉色">
-	      </div>
-	      <div class="modal-footer">
-	        <button id="color_dismiss" type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
-	        <button id="color_add" type="button" class="btn btn-primary">确认添加</button>
-	      </div>
-	    </div>
-	  </div>
-	</div>
-
-<script type="text/javascript">
-	function colorContent(data){
-		var content = "已存在顏色：";
-		$.each(data,function(key){
-			content += '<lable>' + data[key].type + '</label>&nbsp;';
-		});
-		return content;
-	}
-	function typeContent(data){
-		
-	}
-
-	$(function(){
-		var colorUrl = "http://127.0.0.1:8003/xyd/bdm/colors";
-		var typeUrl = "http://127.0.0.1:8003/xyd/bdm/allClothMsg";
-		//获取颜色
-		$.get(colorUrl, function(data){
-			if(data.code == 200){
-				$("#color_p").html(colorContent(data.data));
-			}
-		});
-		//获取服装类型后分配
-		$.get(typeUrl,function(data){
-			console.log(data);
-		});
-		
-		/* 按钮事件 */
-		$("#color_a").click(function(){
-			
-		});
-		$("#clothType_a").click(function(){
-			
-		});
-		$("#pantType_a").click(function(){
-			
-		});
-		$("#shoeType_a").click(function(){
-			
-		});
-		$("#otherType_a").click(function(){
-			
-		});
-		$("#addType_a").click(function(){
-			alert("未开放");
-		});
-		$("#color_add").click(function(){
-			$.post("http://127.0.0.1:8003/xyd/bdm/color",{
-				colorName : $("#colorName").val()
-			},function(data){
-				if(data.code == 200){
-					$("#color_dismiss").click();
-				}else{
-					alert(data.msg);
-				}
-			})
->>>>>>> branch 'master' of https://github.com/wz14122/LauduryBackground.git
 		});
 		
 	});

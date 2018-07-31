@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>客户维护</title>
+<link href="/xyd/css/bootstrap/bootstrap.min.css" rel="stylesheet">
+<link href="/xyd/css/bootstrap/bootstrap-table.css" rel="stylesheet">
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script>window.jQuery || document.write('<script src="/xyd/js/bootstrap/jquery-slim.min.js"><\/script>')</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script src="/xyd/js/bootstrap/bootstrap-table.js"></script>
+<script src="/xyd/js/bootstrap/ga.js"></script>
+</head>
+<body>
+<div class="container">
+    <h1>客户维护</h1>
+    <div id="toolbar">
+    	<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+  			添加新客户
+		</button>
+    </div>
+    <table id="table">
+    	
+    </table>
+    
+    <!-- Modal -->
+	<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+	  <div class="modal-dialog modal-dialog-centered" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title" id="exampleModalCenterTitle">添加新客户</h5>
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      </div>
+	      <div class="modal-body">
+			<form>
+			  <div class="form-group">
+			    <label for="customer_name">客户名</label>
+			    <input type="email" class="form-control" id="customer_name" placeholder="客户名">
+			    <small id="emailHelp" class="form-text text-muted">常用名，实际账单中记录名，必填.</small>
+			  </div>
+			  <div class="form-group">
+			    <label for="customer_address">客户地址</label>
+			    <input type="text" class="form-control" id="customer_address" aria-describedby="addresshelper" placeholder="地址">
+			    <small id="addresshelper" class="form-text text-muted">地址，收货地址（非必填），为后期上门收货/送货做准备.</small>
+			  </div>
+			  
+			  <div class="form-group">
+			    <label>用户性别</label>
+			    <br/>
+				<input class="" type="radio" name="genderRadios" id="male" value="1" checked>
+				<label class="form-check-label" for="male">
+				  男
+				</label>
+				<input class="" type="radio" name="genderRadios" id="female" value="2">
+				<label class="form-check-label" for="female">
+				  女
+				</label>
+			  </div>
+			  
+			  <div class="form-group">
+			    <label for="customer_wechat">客户微信</label>
+			    <input type="text" class="form-control" id="customer_wechat" aria-describedby="wechathelper" placeholder="微信号">
+			    <small id="wechathelper" class="form-text text-muted">客户的微信号（非必填），为后期客户管理、添加微信做准备.</small>
+			  </div>
+			  <div class="form-group">
+			    <label for="customer_remark">备注</label>
+			    <input type="text" class="form-control" id="customer_remark" aria-describedby="remarkhelper" placeholder="备注">
+			    <small id="remarkhelper" class="form-text text-muted">备注</small>
+			  </div>
+			</form>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+	        <button id="customer_add" type="button" class="btn btn-primary">保存</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	
+	
+</div>
+    
+<script type="text/javascript">
+var $table = $('#table');
+var type = {1 : "清洗", 2 : "修理", 3 : "制作"};
+function InitMainTable () {
+    //记录页面bootstrap-table全局变量$table，方便应用
+    var queryUrl = 'http://127.0.0.1:8003/xyd/cc/customers'
+    $table = $('#table').bootstrapTable({
+        url: queryUrl,                      //请求后台的URL（*）
+        method: 'GET',                      //请求方式（*）
+        pagination: 'true',                   //是否显示分页（*）
+        striped: true,                      //是否显示行间隔色
+        cache: false,                       //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
+        sortable: true,                     //是否启用排序
+        search: true,                      //是否显示表格搜索
+		toolbar: '#toolbar',
+        columns: [ {
+            field: 'index',
+            title: '序号',
+            sortable: true,
+            align : 'center',
+            formatter: consumptionFormatter
+        },{
+            field: 'customerName',
+            title: '客户',
+            sortable: true,
+            align : 'center'
+        }, {
+            field: 'customerGender',
+            title: '客户性别',
+            sortable: true,
+            align : 'center',
+            formatter : genderFormatter
+        }, {
+            field: 'wechatId',
+            title: '微信号',
+            sortable: true,
+            align : 'center'
+        }, {
+            field: 'address',
+            title: '地址',
+            sortable: true,
+            align : 'center'
+        }, {
+            field: 'remark',
+            title: '备注',
+            width: 200,
+            align: 'center'
+        }, {
+            //field:'consumptionId',
+            title: '操作',
+            width: 250,
+            align: 'center',
+            valign: 'middle',
+            formatter: actionFormatter
+        }, ],
+        onLoadSuccess: function () {
+        },
+        onLoadError: function () {
+            showTips("数据加载失败！");
+        },
+        onDblClickRow: function (row, $element) {
+            var id = row.ID;
+            EditViewById(id, 'view');
+        },
+    });
+};
+
+//性别字段格式化
+function genderFormatter(value) {
+    if (value == "1") { color = 'Red'; result = '女';}
+    else if (value == "2") { color = 'Green'; result = '男';}
+    else { color = 'Yellow'; result = '未填写'; }
+
+    return '<div style="color: ' + color + '">' + result + '</div>';
+}
+//操作栏的格式化
+function actionFormatter(value, row, index) {
+    var id = value;
+    var result = "";
+    result += "<button class='details btn btn-info btn-sm'>详细</button>&nbsp;";
+    result += "<button class='delete btn btn-danger btn-sm'>删除</button>&nbsp;";
+    return result;
+}
+function dateFormatter (value, row, index){
+	return null;
+}
+function details(index, row) {
+    var html = [];
+    $.each(row, function (key, value) {
+        html.push('<p><b>' + key + ':</b> ' + value + '</p>');
+ 	});
+ return html.join('');
+}
+//格式化订单号
+function consumptionFormatter(value, row, index){
+	var content = '<label style="display:none">'+value+'</label>'+(index+1);
+	return content;
+}
+/* 数据加载部分结束 */
+
+//内容标记
+function goodContent(data){
+	var content = "";
+	
+	$.each(data, function(index, value){
+		content += '<tr>';
+		content += '<td style="display:none">'+value.consumptionId+'</td>'
+		content += '<td style="display:none">'+value.goodsId+'</td>'
+		content += '<td>'+value.name+'</td>';
+		content += '<td>'+value.price+'</td>';
+		content += '<td>'+value.nums+'</td>';
+		content += '<td>'+value.remark+'</td>';
+		if(value.haveFetch){
+			content += '<td><lable style="color:green;">已取</label></td>';
+			content += '<td><button class="fetchThe btn btn-secondary btn-sm">已取货</button></td>';
+		}else{
+			content += '<td><lable style="color:red;">未取</label></td>';
+			content += '<td><button class="fetchThe btn btn-info btn-sm">取货</button></td>';
+		}
+		content += '</tr>'
+	});
+	return content;
+}
+
+/* 部分更新所需要的map，点击确认取货后清空 */
+var fetchMap = new Object();
+function mapToArray(map){
+	var list = new Array();
+	$.each(map,function(i){
+		list.push(i);
+	});
+	return list;
+}
+/* 结束 */
+
+$(function () {
+	//初始化表格数据
+	InitMainTable();
+	
+	$("#customer_add").click(function(){
+		var addUrl = "http://127.0.0.1:8003/xyd/cc/customer";
+		$.post(addUrl, {
+			customerName : $("#customer_name").val(),
+			customerGender : $("input[type='radio']:checked").val(),
+			wechatId : $("#customer_wechat").val(),
+			address : $("#customer_address").val(),
+			remark : $("#customer_remark").val()
+		},function(data){
+			console.log(data);
+		});
+	});
+	
+});
+</script>
+</body>
+</html>

@@ -49,4 +49,9 @@ public class ConsumptionService {
 	public List<Consumption> findAll(){
 		return dao.findAll();
 	}
+
+	public Object getOrdersWithCondition(String username, String localDate) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

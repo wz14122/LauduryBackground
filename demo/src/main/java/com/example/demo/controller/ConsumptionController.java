@@ -31,4 +31,9 @@ public class ConsumptionController {
 		return ResultUtil.success(service.findAll());
 	}
 	
+	@GetMapping(value = "/ordersWithCondition")
+	public Result getOrdersWithCondition(@RequestParam(value = "username", required = true) String username,
+			@RequestParam(value = "localDate") String localDate) {
+		return ResultUtil.success(service.getOrdersWithCondition(username, localDate));
+	}
 }

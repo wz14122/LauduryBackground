@@ -56,9 +56,9 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">
+                <a id="customer_manage" class="nav-link" href="#">
                   <span data-feather="users"></span>
-                  Customers
+                  	客户维护
                 </a>
               </li>
               <li class="nav-item">
@@ -176,6 +176,11 @@
 	    		$("#color_manage").addClass("active");
 	    		$("#mainiframe").attr("src","/xyd/html/maintenance/utilsMaintence.html");
 	    	});
+	    	$("#customer_manage").click(function(){
+	    		$(".nav-item a").removeClass("active");
+	    		$("#customer_manage").addClass("active");
+	    		$("#mainiframe").attr("src","/xyd/html/maintenance/Customer.html");
+	    	})
 	    });
     </script>
   </body>
